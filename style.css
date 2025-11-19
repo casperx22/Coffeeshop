@@ -1,0 +1,245 @@
+/* Variabel Warna Retro */
+:root {
+    --color-primary: #8b4513; /* Cokelat Tua (Kopi) */
+    --color-secondary: #f0e68c; /* Kuning Pucat (Khaki) */
+    --color-accent: #a52a2a; /* Merah Bata/Karat */
+    --color-text-dark: #36454F; /* Abu-abu Arang */
+    --color-text-light: #f5f5dc; /* Krem */
+    --color-background: #fff8e1; /* Kuning Pucat Lembut */
+    --font-main: 'Roboto Slab', serif;
+    --font-heading: 'Oswald', sans-serif;
+}
+
+/* Reset Dasar */
+body {
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Struktur Navigasi */
+.header {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--color-secondary);
+    text-shadow: 2px 2px var(--color-accent);
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: var(--color-text-light);
+    font-size: 1.1em;
+    font-family: var(--font-heading);
+    margin-left: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-links button:hover {
+    color: var(--color-secondary);
+    text-shadow: 1px 1px var(--color-accent);
+}
+
+/* Struktur Halaman (Navigasi Sederhana JS) */
+.page {
+    min-height: 80vh;
+    padding: 50px 5%;
+    display: none; /* Disembunyikan oleh CSS, ditampilkan oleh JS */
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page.active {
+    display: block; 
+}
+
+/* Halaman Beranda */
+#home {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Placeholder background image for retro feel */
+    background: url('https://picsum.photos/1200/800?random=1') no-repeat center center/cover;
+    color: var(--color-text-light);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#home h1 {
+    font-family: var(--font-heading);
+    font-size: 4em;
+    margin-bottom: 0.5em;
+    border: 5px solid var(--color-secondary);
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: rgba(139, 69, 19, 0.7);
+}
+
+.cta-button {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    border: 3px solid var(--color-secondary);
+    padding: 15px 30px;
+    font-size: 1.5em;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    margin-top: 20px;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0px var(--color-text-dark);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Halaman Menu */
+#menu h2 {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    color: var(--color-primary);
+    border-bottom: 4px solid var(--color-accent);
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.menu-category {
+    margin-bottom: 50px;
+    background-color: #fcebb6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 6px 6px 0px var(--color-primary);
+}
+
+.menu-category h3 {
+    font-family: var(--font-heading);
+    font-size: 2em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed var(--color-primary);
+    padding-bottom: 10px;
+}
+
+/* Item Menu dengan Gambar */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px dashed var(--color-text-dark);
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.item-image {
+    width: 80px; 
+    height: 80px;
+    min-width: 80px; /* Penting agar gambar tidak menyusut pada layar kecil */
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid var(--color-accent);
+}
+
+.item-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-info {
+    flex-grow: 1;
+    margin-right: 15px;
+}
+
+.item-name {
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--color-primary);
+}
+
+.item-desc {
+    font-size: 0.9em;
+    color: var(--color-text-dark);
+    margin-top: 5px;
+}
+
+.item-price {
+    font-family: var(--font-heading);
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--color-accent);
+    background-color: var(--color-secondary);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Halaman Tentang Kami */
+#about {
+    text-align: center;
+}
+
+#about p {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    font-size: 1.1em;
+    text-align: justify;
+    background-color: #fff;
+    padding: 20px;
+    border-left: 5px solid var(--color-accent);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    text-align: center;
+    padding: 20px 5%;
+    margin-top: 30px;
+    font-size: 0.9em;
+}
+
+/* Responsif Sederhana */
+@media (max-width: 768px) {
+    .menu-item {
+        flex-wrap: wrap;
+    }
+    .item-image {
+        margin-bottom: 10px;
+    }
+    .item-content {
+        width: 100%;
+        margin-left: 0;
+    }
+    .item-price {
+        margin-top: 5px;
+    }
+}
