@@ -1,199 +1,243 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kopi Senja</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kedai Bathara — Kopi & Rasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #111;
-      color: #fff;
-      overflow-x: hidden;
+    :root{
+      --bg:#0b0711; /* deep */
+      --card:#0f1221;
+      --accent1: #ff6bcb; /* magenta */
+      --accent2: #7b61ff; /* violet */
+      --accent3: #ffd166; /* warm yellow */
+      --glass: rgba(255,255,255,0.04);
+      --muted: rgba(255,255,255,0.6);
     }
-    header {
-      height: 70vh;
-      background: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-shadow: 0 0 20px rgba(0,0,0,0.7);
-      opacity: 0;
-      transform: translateY(-40px);
-      animation: fadeIn 1.4s forwards ease-out;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    h1 {
-      font-size: 4rem;
-      margin: 0;
-    }
-    p.tagline {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-    .menu-section {
-      padding: 50px 20px;
-      text-align: center;
-    }
-    .menu-section h2 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      padding: 20px;
-    }
-    .menu-item {
-      background: #222;
-      border-radius: 15px;
-      overflow: hidden;
-      transform: scale(0.8);
-      opacity: 0;
-      transition: 0.4s;
-    }
-    .menu-item img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .menu-item .info {
-      padding: 15px;
-    }
-    .buy-btn {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #f5c46b;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .buy-btn:hover {
-      background: #ffdb92;
-      transform: scale(1.05);
-    }/* MODAL */
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-}
-.modal-bg.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-.modal-box {
-  background: #222;
-  padding: 25px;
-  width: 90%;
-  max-width: 350px;
-  border-radius: 15px;
-  text-align: center;
-  animation: pop 0.4s ease;
-}
-@keyframes pop {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.modal-box button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #f5c46b;
-  cursor: pointer;
-  font-weight: bold;
-}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#070511);font-family:'Poppins',sans-serif;color:#fff}/* top nav */
+.nav{position:fixed;right:24px;top:18px;z-index:40;display:flex;gap:12px;align-items:center}
+.nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+.nav a.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#0b0711;box-shadow:0 6px 24px rgba(123,97,255,0.18)}
+
+/* header/home */
+header{min-height:88vh;display:flex;align-items:center;justify-content:center;padding:32px;position:relative;background-image:radial-gradient(circle at 10% 10%, rgba(255,107,203,0.06), transparent 8%), radial-gradient(circle at 90% 90%, rgba(123,97,255,0.06), transparent 8%)}
+.hero{max-width:980px;text-align:center}
+.brand{display:inline-block;padding:8px 14px;border-radius:30px;background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#070511;font-weight:700;letter-spacing:0.6px}
+h1{font-size:48px;margin:18px 0 6px;line-height:1.04}
+p.lead{color:var(--muted);font-size:16px;margin:0 0 26px}
+
+/* lihat menu button center */
+.cta{display:inline-block;padding:16px 28px;border-radius:14px;background:linear-gradient(90deg,var(--accent1),var(--accent2));font-weight:700;color:#070511;box-shadow:0 12px 30px rgba(123,97,255,0.12);cursor:pointer;transform:translateY(0);transition:transform 200ms}
+.cta:active{transform:translateY(3px)}
+
+/* floating card preview */
+.hero-card{margin-top:28px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:14px;display:flex;gap:14px;align-items:center;justify-content:center;backdrop-filter: blur(6px)}
+.hero-card img{width:72px;height:72px;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+.hero-card .info{ text-align:left }
+.hero-card .info h4{margin:0 0 6px}
+.hero-card .info p{margin:0;color:var(--muted);font-size:13px}
+
+/* main content */
+main{padding:40px 20px 120px}
+
+/* menu page */
+.panel{max-width:1100px;margin:0 auto}
+.controls{display:flex;gap:10px;align-items:center;justify-content:center;margin-bottom:20px}
+.chip{padding:8px 14px;border-radius:999px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-weight:600}
+.chip.active{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#070511}
+
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden}
+.card .thumb{height:140px;border-radius:10px;overflow:hidden;margin-bottom:12px}
+.card img{width:100%;height:100%;object-fit:cover;display:block}
+.card h3{margin:0 0 6px;font-size:18px}
+.price{font-weight:800;color:var(--accent3)}
+.desc{color:var(--muted);font-size:13px;margin-top:8px}
+.buy{position:absolute;right:12px;bottom:12px;padding:8px 10px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#070511;border:none;cursor:pointer;font-weight:700}
+
+/* about */
+.about{max-width:900px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:28px;border-radius:12px}
+.about h2{margin-top:0}
+
+/* footer */
+footer{margin-top:40px;padding:24px;text-align:center;color:var(--muted)}
+
+/* page transitions */
+.page{display:none;opacity:0;transform:translateY(12px);transition:all 320ms}
+.page.active{display:block;opacity:1;transform:translateY(0)}
+
+/* responsive */
+@media(max-width:600px){h1{font-size:32px}.nav{right:12px;top:12px}.hero-card{flex-direction:column}}
 
   </style>
 </head>
-<body>
-  <header>
-    <h1>Kopi Senja</h1>
-    <p class="tagline">Tempat singgahnya rasa dan cerita</p>
-  </header>  <section class="menu-section">
-    <h2>Menu Andalan</h2>
-    <div class="menu-grid"><div class="menu-item hidden">
-    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" />
-    <div class="info">
-      <h3>Latte Caramel</h3>
-      <p class="price">Rp 25.000</p>
-      <button class="buy-btn" onclick="openModal('Latte Caramel')">Beli Sekarang</button>
-    </div>
+<body>  <!-- Top-right nav -->  <nav class="nav">
+    <a href="#home" id="navHome" class="active" onclick="goTo('home')">Beranda</a>
+    <a href="#about" id="navAbout" onclick="goTo('about')">Tentang Kami</a>
+  </nav>  <!-- PAGE: HOME -->  <header id="page-home" class="page active">
+    <div class="hero">
+      <div class="brand">Kedai Bathara</div>
+      <h1>Rasa yang menemani senja & pagi mu</h1>
+      <p class="lead">Kopi berkualitas, cemilan rumahan, dan suasana nyaman. Selamat datang di Kedai Bathara.</p><div style="margin-top:22px">
+    <button class="cta" id="lihatMenuBtn" onclick="goTo('menu')">Lihat Menu</button>
   </div>
 
-  <div class="menu-item hidden">
-    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93" />
+  <div class="hero-card" style="margin-top:22px">
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085" alt="kopi"/>
     <div class="info">
-      <h3>Espresso Shot</h3>
-      <p class="price">Rp 18.000</p>
-      <button class="buy-btn" onclick="openModal('Espresso Shot')">Beli Sekarang</button>
+      <h4>Special: Latte Butter</h4>
+      <p>Perpaduan kopi & butter, hangat, lembut, cocok untuk teman belajar.</p>
     </div>
   </div>
+</div>
 
-  <div class="menu-item hidden">
-    <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e" />
-    <div class="info">
-      <h3>Mocha Delight</h3>
-      <p class="price">Rp 27.000</p>
-      <button class="buy-btn" onclick="openModal('Mocha Delight')">Beli Sekarang</button>
-    </div>
-  </div>
-
-  <div class="menu-item hidden">
-    <img src="https://images.unsplash.com/photo-1572441710534-680f3c5530c7" />
-    <div class="info">
-      <h3>Cappuccino</h3>
-      <p class="price">Rp 23.000</p>
-      <button class="buy-btn" onclick="openModal('Cappuccino')">Beli Sekarang</button>
-    </div>
+  </header>  <!-- PAGE: MENU -->  <main id="page-menu" class="page">
+    <div class="panel">
+      <h2 style="text-align:center;margin-top:10px">Menu Kedai Bathara</h2>
+      <div class="controls" role="tablist" aria-label="Kategori">
+        <div class="chip active" data-cat="all" onclick="filter('all')">Semua</div>
+        <div class="chip" data-cat="coffee" onclick="filter('coffee')">Coffee</div>
+        <div class="chip" data-cat="noncoffee" onclick="filter('noncoffee')">Non-Coffee</div>
+        <div class="chip" data-cat="food" onclick="filter('food')">Food</div>
+      </div><div class="menu-grid" id="menuGrid">
+    <!-- cards injected by JS -->
   </div>
 
 </div>
 
+  </main>  <!-- PAGE: ABOUT -->  <section id="page-about" class="page">
+    <div class="about">
+      <h2>Tentang Kedai Bathara</h2>
+      <p>Kedai Bathara adalah tempat sederhana yang lahir dari kecintaan pada kopi dan keramahan. Kami menyajikan racikan kopi tradisional dan modern, minuman non-coffee yang menyegarkan, serta menu makanan rumahan yang bikin betah.</p>
+      <p style="margin-top:12px;color:var(--muted)">Alamat: Jl. Jaka Muda No.22 • Jam buka: 24 jam loss • Kontak: 0881234567</p>
+    </div>
   </section>  <footer>
-    <p>© 2025 Kopi Senja — Dibuat oleh Programmer Tingkat Dewa</p>
-  </footer>  <!-- MODAL -->  <div class="modal-bg" id="modalBg">
-    <div class="modal-box">
-      <h2 id="modalTitle">Beli Sekarang</h2>
-      <p>Apakah kamu yakin ingin membeli menu ini?</p>
-      <button onclick="closeModal()">Tutup</button>
+    © 2025 Kedai Bathara — Dibuat oleh Farel dan Brian
+  </footer>  <!-- Modal pembelian sederhana -->  <div id="modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;background:rgba(3,3,8,0.6)">
+    <div style="background:#0f1221;padding:18px;border-radius:12px;max-width:360px;width:92%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
+      <h3 id="modalTitle">Item</h3>
+      <p id="modalDesc" style="color:var(--muted)"></p>
+      <p style="font-weight:800;color:var(--accent3)" id="modalPrice"></p>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+        <button onclick="closeModal()" style="padding:8px 12px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)">Batal</button>
+        <button onclick="confirmBuy()" style="padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#070511;font-weight:700">Beli Sekarang</button>
+      </div>
     </div>
   </div>  <script>
-    const items = document.querySelectorAll('.menu-item');
+    // PAGE NAV
+    function goTo(page){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      document.getElementById('page-'+page).classList.add('active');
+      // nav active state
+      document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+      if(page==='home') document.getElementById('navHome').classList.add('active');
+      if(page==='about') document.getElementById('navAbout').classList.add('active');
+      // smooth scroll top
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'scale(1)';
-        }
+    // MENU DATA
+    const MENU = [
+      /* Coffee */
+      {name:'Americano',price:8000,cat:'coffee',desc:'Kopi hitam klasik, rasa pekat & bersih',img:'https://images.unsplash.com/photo-1511920170033-f8396924c348'},
+      {name:'Kopi Susu',price:8000,cat:'coffee',desc:'Espresso + susu segar, manis lembut',img:'https://images.unsplash.com/photo-1541167760496-1628856ab772'},
+      {name:'Kopi Susu Butter',price:12000,cat:'coffee',desc:'Perpaduan kopi dan butter yang kaya dan creamy',img:'https://images.unsplash.com/photo-1541167760496-1628856ab772'},
+      {name:'Vietnam Drip',price:8000,cat:'coffee',desc:'Kopi kental dengan teknik drip gaya Vietnam',img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93'},
+      {name:'Kopi Susu O',price:9000,cat:'coffee',desc:'Kopi susu spesial dengan gula aren',img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93'},
+     
+      /* Non-Coffee */
+      {name:'Susu',price:8000,cat:'noncoffee',desc:'Susu hangat/dingin, cocok untuk semua usia',img:'https://images.unsplash.com/photo-1511453674410-0dca7f8f8f3a'},
+      {name:'Susu Jahe',price:9000,cat:'noncoffee',desc:'Susu hangat + jahe segar, penghangat badan',img:'https://images.unsplash.com/photo-1544679313-2bde7b147f6c'},
+      {name:'Milktea',price:10000,cat:'noncoffee',desc:'Teh susu lembut dengan topping pilihan',img:'https://images.unsplash.com/photo-1587732289426-0c58c7f6a7b7'},
+      {name:'Lychea Tea',price:12000,cat:'noncoffee',desc:'Teh lychee segar, manis & aroma buah',img:'https://images.unsplash.com/photo-1505576391880-4b9f7b8f1d6c'},
+      {name:'Lemon Tea',price:12000,cat:'noncoffee',desc:'Teh lemon menyegarkan untuk hari panas',img:'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0'},
+      {name:'Coklat Panas/Dingin',price:12000,cat:'noncoffee',desc:'Coklat kental, bisa panas atau dingin',img:'https://images.unsplash.com/photo-1601204876936-0b3b9b8efb6f'},
+      {name:'Matcha Latte',price:14000,cat:'noncoffee',desc:'Matcha berkualitas dicampur susu lembut',img:'https://images.unsplash.com/photo-1505250469679-203ad9ced0cb'},
+      {name:'Red Velvet',price:14000,cat:'noncoffee',desc:'Minuman red velvet gurih dan manis',img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38'},
+      {name:'Cookies and Cream',price:14000,cat:'noncoffee',desc:'Milkshake dengan potongan cookies',img:'https://images.unsplash.com/photo-1589307000239-7c9b3f0a1d44'},
+      {name:'Taro',price:13000,cat:'noncoffee',desc:'Minuman taro lembut, warna ungu cantik',img:'https://images.unsplash.com/photo-1504384308090-c894fdcc538d'},
+      {name:'Banana Cream',price:13000,cat:'noncoffee',desc:'Kombinasi pisang & krim, manis natural',img:'https://images.unsplash.com/photo-1561043433-aaf687c4cf4f'},
+      {name:'Squash Melon',price:10000,cat:'noncoffee',desc:'Minuman squash melon segar',img:'https://images.unsplash.com/photo-1567945716313-7bf3b9b2d7f2'},
+      {name:'Squash Leci',price:10000,cat:'noncoffee',desc:'Minuman squash leci, aroma buah elegan',img:'https://images.unsplash.com/photo-1505250469679-203ad9ced0cb'},
+       {name:'Josua',price:7000,cat:'coffee',desc:'Minuman soda dengan sirup dan sedikit perasan jeruk nipis, full body',img:'https://images.unsplash.com/photo-1498804103079-a6351b050096'},
+
+      /* Food */
+      {name:'Nasi Ayam Sambel',price:15000,cat:'food',desc:'Nasi hangat + ayam sambal pedas',img:'https://images.unsplash.com/photo-1604908177522-6b7f3c2ed1d1'},
+      {name:'Nasi Goreng',price:13000,cat:'food',desc:'Nasi goreng aromatik, telur & sayur',img:'https://images.unsplash.com/photo-1546069901-eacef0df6022'},
+      {name:'Nasi Bakar Ayam Suwir',price:15000,cat:'food',desc:'Nasi bakar aroma daun pisang + ayam suwir',img:'https://images.unsplash.com/photo-1604908177498-36b9d5e1e1e0'},
+      {name:'Nasi Telur Sambel',price:13000,cat:'food',desc:'Nasi + telur + sambal spesial',img:'https://images.unsplash.com/photo-1604908177426-6f56a8b6b6b6'},
+      {name:'Bakmi Asin',price:15000,cat:'food',desc:'Bakmi rasa asin gurih, porsi mantap',img:'https://images.unsplash.com/photo-1604908177423-5e6b6a6a6a6a'},
+      {name:'Kentang Goreng',price:10000,cat:'food',desc:'Kentang renyah, cocok untuk sharing',img:'https://images.unsplash.com/photo-1505576391880-4b9f7b8f1d6c'},
+      {name:'Tahu Krispi',price:10000,cat:'food',desc:'Tahu goreng tepung, garing di luar lembut di dalam',img:'https://images.unsplash.com/photo-1544025162-d76694265947'},
+      {name:'Cireng Ayam Suwir',price:10000,cat:'food',desc:'Cireng modern isi ayam suwir pedas',img:'https://images.unsplash.com/photo-1598511728736-0a3d6e7b2d6b'},
+      {name:'Dimsum Mentaii',price:12000,cat:'food',desc:'Dimsum lembut dengan saus mentai',img:'https://images.unsplash.com/photo-1587465173333-6b58b8d8d8d8'},
+      {name:'Mix Platter',price:13000,cat:'food',desc:'Paduan gorengan & finger food untuk sharing',img:'https://images.unsplash.com/photo-1544025162-d76694265947'},
+      {name:'Tempe Mendoan',price:10000,cat:'food',desc:'Tempe tipis goreng, harum & gurih',img:'https://images.unsplash.com/photo-1544025162-d76694265947'},
+      {name:'Sosis Goreng',price:10000,cat:'food',desc:'Sosis goreng renyah, saus sambal madu',img:'https://images.unsplash.com/photo-1544025162-d76694265947'}
+    ];
+
+    // render menu
+    const menuGrid = document.getElementById('menuGrid');
+    function money(n){return 'Rp '+ n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+
+    function render(list){
+      menuGrid.innerHTML = '';
+      list.forEach(item=>{
+        const card = document.createElement('article');
+        card.className='card';
+        card.innerHTML = `
+          <div class="thumb"><img src="${item.img}&w=800&q=80" alt="${item.name}"></div>
+          <h3>${item.name} <span style=\"float:right;color:var(--muted);font-weight:700\">${money(item.price)}</span></h3>
+          <p class="desc">${item.desc}</p>
+          <button class="buy" onclick="openModal('${escapeHtml(item.name)}', '${escapeHtml(item.desc)}', ${item.price})">Beli</button>
+        `;
+        menuGrid.appendChild(card);
       });
-    }, { threshold: 0.3 });
-
-    items.forEach(item => observer.observe(item));
-
-    function openModal(name) {
-      document.getElementById('modalTitle').innerText = name;
-      document.getElementById('modalBg').classList.add('active');
     }
-    function closeModal() {
-      document.getElementById('modalBg').classList.remove('active');
+
+    function escapeHtml(str){return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+    // initial render
+    render(MENU);
+
+    // filter
+    function filter(cat){
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      document.querySelectorAll('.chip').forEach(c=>{ if(c.dataset.cat===cat) c.classList.add('active'); if(cat==='all' && c.dataset.cat==='all') c.classList.add('active'); });
+      if(cat==='all') render(MENU);
+      else render(MENU.filter(m=>m.cat===cat));
     }
-  </script></body>
+
+    // modal
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    let currentItem = null;
+    function openModal(name,desc,price){
+      currentItem = {name,desc,price};
+      modalTitle.textContent = name;
+      modalDesc.textContent = desc;
+      modalPrice.textContent = money(price);
+      modal.style.display = 'flex';
+    }
+    function closeModal(){modal.style.display='none';currentItem=null}
+    function confirmBuy(){
+      if(!currentItem) return closeModal();
+      alert(Terima kasih! Pesanan ${currentItem.name} (${money(currentItem.price)}) akan diproses.);
+      closeModal();
+    }
+
+    // support nav back when clicking top left home link
+    document.getElementById('lihatMenuBtn').addEventListener('click',()=>goTo('menu'));
+
+    // initial state: show home
+    goTo('home');
+  </script>  
+  --></body>
 </html>
