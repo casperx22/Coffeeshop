@@ -93,7 +93,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: url('https://picsum.photos/1200/800?random=1') no-repeat center center/cover; /* Placeholder untuk gambar retro */
+            /* Ganti placeholder dengan URL gambar yang lebih stabil */
+            background: url('https://source.unsplash.com/random/1200x800/?coffee,vintage') no-repeat center center/cover; 
             color: var(--color-text-light);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
@@ -128,6 +129,18 @@
         }
 
         /* --- Halaman 2: Menu --- */
+        #menu {
+            display: flex;
+            flex-wrap: wrap; /* Memungkinkan item keranjang dan menu bersebelahan */
+            gap: 20px;
+        }
+        
+        .menu-content {
+            flex-grow: 1;
+            flex-basis: 65%; /* Mengambil sebagian besar ruang */
+            min-width: 300px;
+        }
+        
         #menu h2 {
             font-family: var(--font-heading);
             font-size: 3em;
@@ -186,7 +199,7 @@
             margin-top: 5px;
         }
 
-        .item-price {
+        .item-price button {
             font-family: var(--font-heading);
             font-size: 1.3em;
             font-weight: 700;
@@ -194,6 +207,79 @@
             background-color: var(--color-secondary);
             padding: 5px 10px;
             border-radius: 5px;
+            border: 2px solid var(--color-accent);
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        
+        .item-price button:hover {
+            background-color: #ffd966;
+            transform: scale(1.05);
+        }
+        /* --- Keranjang (Cart) --- */
+        .cart-sidebar {
+            flex-basis: 30%; /* Mengambil 30% ruang */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 80px; /* Di bawah header */
+            height: fit-content;
+            min-width: 250px;
+        }
+
+        .cart-sidebar h3 {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        #cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+
+        #cart-total {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--color-accent);
+            border-top: 2px solid var(--color-primary);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-button {
+            display: block;
+            width: 100%;
+            background-color: var(--color-accent);
+            color: var(--color-text-light);
+            border: none;
+            padding: 12px;
+            font-size: 1.1em;
+            font-family: var(--font-heading);
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .checkout-button:hover {
+            background-color: var(--color-primary);
         }
 
         /* --- Halaman 3: Tentang Kami --- */
@@ -232,6 +318,16 @@
         }
 
         /* Responsif Sederhana */
+        @media (max-width: 900px) {
+            #menu {
+                flex-direction: column;
+            }
+            .cart-sidebar {
+                flex-basis: 100%;
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
         @media (max-width: 768px) {
             .logo {
                 font-size: 1.5em;
@@ -271,247 +367,324 @@
         <h1>Ngopi Santai, Bikin Hidup Penuh Warna Warni</h1>
         <p>Tempat ngopi terbaik dengan suasana vintage dan cita rasa kopi lokal.</p>
         <button class="cta-button" onclick="showPage('menu')">Lihat Menu Kami</button>
-        
     </main>
 
     <section id="menu" class="page">
-        <h2>📜 Menu Pilihan Kedai Bathara ☕</h2>
+        <div class="menu-content">
+            <h2>📜 Menu Pilihan Kedai Bathara ☕</h2>
 
-        <div class="menu-category">
-            <h3>☕ Kopi Klasik & Kekinian</h3>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Americano</div>
-                    <div class="item-desc">Espresso murni disajikan dengan air panas/dingin. Pilihan classic untuk pecinta kopi sejati.</div>
+            <div class="menu-category">
+                <h3>☕ Kopi Klasik & Kekinian</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Americano</div>
+                        <div class="item-desc">Espresso murni disajikan dengan air panas/dingin. Pilihan classic untuk pecinta kopi sejati.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Americano', 8000)">Rp 8.000</button>
+                    </div>
                 </div>
-                <div class="item-price">Rp 8.000</div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu</div>
+                        <div class="item-desc">Paduan espresso, susu, dan gula aren yang manis dan creamy. Sederhana, namun selalu nikmat.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Kopi Susu', 8000)">Rp 8.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu Butter</div>
+                        <div class="item-desc">Kopi susu yang ditambah butter untuk rasa gurih. Wajib kalian coba!</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Kopi Susu Butter', 12000)">Rp 12.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Vietnam Drip</div>
+                        <div class="item-desc">Kopi tubruk pekat khas Vietnam yang diteteskan perlahan, dicampur susu kental manis.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Vietnam Drip', 8000)">Rp 8.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu O</div>
+                        <div class="item-desc">Racikan kopi susu otentik dengan resep rahasia Bathara. Lebih unik dan kuat rasanya.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Kopi Susu O', 9000)">Rp 9.000</button>
+                    </div>
+                </div>
             </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Kopi Susu</div>
-                    <div class="item-desc">Paduan espresso, susu, dan gula aren yang manis dan creamy. Sederhana, namun selalu nikmat.</div>
+
+            <div class="menu-category">
+                <h3>🥛 Non-Kopi & Teh Segar</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Susu</div>
+                        <div class="item-desc">Susu murni (panas/dingin). Pilihan sederhana yang menyehatkan.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Susu', 8000)">Rp 8.000</button>
+                    </div>
                 </div>
-                <div class="item-price">Rp 8.000</div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Susu Jahe</div>
+                        <div class="item-desc">Susu panas dengan jahe bakar yang menghangatkan, cocok untuk malam yang dingin.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Susu Jahe', 9000)">Rp 9.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Milktea</div>
+                        <div class="item-desc">Teh dengan susu, perpaduan sempurna antara pahit dan manis.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Milktea', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Lychee Tea</div>
+                        <div class="item-desc">Teh dengan rasa leci yang manis dan aroma buah yang menyegarkan.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Lychee Tea', 12000)">Rp 12.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Lemon Tea</div>
+                        <div class="item-desc">Teh dengan perasan lemon asli. Segar, asam, dan manis.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Lemon Tea', 12000)">Rp 12.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Cokelat Panas/Dingin</div>
+                        <div class="item-desc">Cokelat premium yang kental dan kaya rasa. Kenyamanan dalam setiap tegukan.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Cokelat Panas/Dingin', 12000)">Rp 12.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Matcha Latte</div>
+                        <div class="item-desc">Teh hijau Jepang yang lembut, disajikan dengan susu creamy.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Matcha Latte', 14000)">Rp 14.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Red Velvet</div>
+                        <div class="item-desc">Minuman velvet dengan rasa cream cheese yang unik dan warna merah memukau.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Red Velvet', 14000)">Rp 14.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Cookies and Cream</div>
+                        <div class="item-desc">Minuman dengan campuran biskuit dan krim yang manis dan crunchy.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Cookies and Cream', 14000)">Rp 14.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Taro</div>
+                        <div class="item-desc">Minuman ubi talas dengan rasa manis, earthy dan warna ungu yang khas.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Taro', 13000)">Rp 13.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Banana Cream</div>
+                        <div class="item-desc">Perpaduan pisang dan krim yang lembut dan manis. Rasa yang unik dan menyegarkan.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Banana Cream', 13000)">Rp 13.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Joshua</div>
+                        <div class="item-desc">Minuman soda dengan sirup dan sedikit perasan jeruk nipis.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Joshua', 7000)">Rp 7.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Squash Melon</div>
+                        <div class="item-desc">Minuman squash rasa melon yang dingin dan menyegarkan.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Squash Melon', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Squash Leci</div>
+                        <div class="item-desc">Minuman squash rasa leci dengan potongan buah.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Squash Leci', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
             </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Kopi Susu Butter</div>
-                    <div class="item-desc">Kopi susu yang ditambah butter untuk rasa gurih. Wajib kalian coba!</div>
+
+            <div class="menu-category">
+                <h3>🍚 Makanan Berat & Camilan Pengisi Energi</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Ayam Sambel</div>
+                        <div class="item-desc">Nasi hangat dengan ayam goreng dan sambal pedas khas Bathara. Menu andalan!</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Nasi Ayam Sambel', 15000)">Rp 15.000</button>
+                    </div>
                 </div>
-                <div class="item-price">Rp 12.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Vietnam Drip</div>
-                    <div class="item-desc">Kopi tubruk pekat khas Vietnam yang diteteskan perlahan, dicampur susu kental manis.</div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Goreng</div>
+                        <div class="item-desc">Nasi yang digoreng dengan bumbu rempah spesial dan topping telur dadar.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Nasi Goreng', 13000)">Rp 13.000</button>
+                    </div>
                 </div>
-                <div class="item-price">Rp 8.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Kopi Susu O</div>
-                    <div class="item-desc">Racikan kopi susu otentik dengan resep rahasia Bathara. Lebih unik dan kuat rasanya.</div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Bakar Ayam Suwir</div>
+                        <div class="item-desc">Nasi yang dibakar dengan daun pisang, berisi ayam suwir pedas. Aromanya menggugah selera.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Nasi Bakar Ayam Suwir', 15000)">Rp 15.000</button>
+                    </div>
                 </div>
-                <div class="item-price">Rp 9.000</div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Telur Sambel</div>
+                        <div class="item-desc">Nasi hangat dengan telur dadar/ceplok dan sambal pedas.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Nasi Telur Sambel', 13000)">Rp 13.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Bakmi Asin</div>
+                        <div class="item-desc">Mie goreng dengan bumbu asin gurih, disajikan dengan bakso dan sayuran.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Bakmi Asin', 15000)">Rp 15.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Kentang Goreng</div>
+                        <div class="item-desc">Kentang goreng renyah disajikan dengan saus sambal dan mayonaise.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Kentang Goreng', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Tahu Krispi</div>
+                        <div class="item-desc">Tahu yang digoreng hingga krispi, gurih dan nikmat.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Tahu Krispi', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Cireng Ayam Suwir</div>
+                        <div class="item-desc">Cireng dengan isian ayam suwir pedas, kenyal di luar, pedas di dalam.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Cireng Ayam Suwir', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Dimsum Mentai</div>
+                        <div class="item-desc">Dimsum dengan saus mentai yang dibakar sebentar.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Dimsum Mentai', 12000)">Rp 12.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Mix Platter</div>
+                        <div class="item-desc">Campuran snack seperti sosis, nugget, dan kentang. Cocok untuk sharing.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Mix Platter', 13000)">Rp 13.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Tempe Mendoan</div>
+                        <div class="item-desc">Tempe yang digoreng setengah matang dengan adonan tepung berbumbu.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Tempe Mendoan', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <div class="item-name">Sosis Goreng</div>
+                        <div class="item-desc">Sosis yang digoreng dan disajikan dengan saus favorit Anda.</div>
+                    </div>
+                    <div class="item-price">
+                        <button onclick="addToCart('Sosis Goreng', 10000)">Rp 10.000</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="menu-category">
-            <h3>🥛 Non-Kopi & Teh Segar</h3>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Susu</div>
-                    <div class="item-desc">Susu murni (panas/dingin). Pilihan sederhana yang menyehatkan.</div>
-                </div>
-                <div class="item-price">Rp 8.000</div>
+        
+        <div class="cart-sidebar">
+            <h3>🛒 Keranjang Anda</h3>
+            <ul id="cart-items">
+                <li id="empty-cart-message">Keranjang masih kosong.</li>
+            </ul>
+            
+            <div id="cart-total">
+                <span>Total:</span>
+                <span id="total-price">Rp 0</span>
             </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Susu Jahe</div>
-                    <div class="item-desc">Susu panas dengan jahe bakar yang menghangatkan, cocok untuk malam yang dingin.</div>
-                </div>
-                <div class="item-price">Rp 9.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Milktea</div>
-                    <div class="item-desc">Teh dengan susu, perpaduan sempurna antara pahit dan manis.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Lychee Tea</div>
-                    <div class="item-desc">Teh dengan rasa leci yang manis dan aroma buah yang menyegarkan.</div>
-                </div>
-                <div class="item-price">Rp 12.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Lemon Tea</div>
-                    <div class="item-desc">Teh dengan perasan lemon asli. Segar, asam, dan manis.</div>
-                </div>
-                <div class="item-price">Rp 12.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Cokelat Panas/Dingin</div>
-                    <div class="item-desc">Cokelat premium yang kental dan kaya rasa. Kenyamanan dalam setiap tegukan.</div>
-                </div>
-                <div class="item-price">Rp 12.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Matcha Latte</div>
-                    <div class="item-desc">Teh hijau Jepang yang lembut, disajikan dengan susu creamy.</div>
-                </div>
-                <div class="item-price">Rp 14.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Red Velvet</div>
-                    <div class="item-desc">Minuman velvet dengan rasa cream cheese yang unik dan warna merah memukau.</div>
-                </div>
-                <div class="item-price">Rp 14.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Cookies and Cream</div>
-                    <div class="item-desc">Minuman dengan campuran biskuit dan krim yang manis dan crunchy.</div>
-                </div>
-                <div class="item-price">Rp 14.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Taro</div>
-                    <div class="item-desc">Minuman ubi talas dengan rasa manis, earthy dan warna ungu yang khas.</div>
-                </div>
-                <div class="item-price">Rp 13.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Banana Cream</div>
-                    <div class="item-desc">Perpaduan pisang dan krim yang lembut dan manis. Rasa yang unik dan menyegarkan.</div>
-                </div>
-                <div class="item-price">Rp 13.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Joshua</div>
-                    <div class="item-desc">Minuman soda dengan sirup dan sedikit perasan jeruk nipis.</div>
-                </div>
-                <div class="item-price">Rp 7.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Squash Melon</div>
-                    <div class="item-desc">Minuman squash rasa melon yang dingin dan menyegarkan.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Squash Leci</div>
-                    <div class="item-desc">Minuman squash rasa leci dengan potongan buah.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
+            
+            <button class="checkout-button" onclick="checkout()">Checkout (Pesan Sekarang)</button>
         </div>
 
-        <div class="menu-category">
-            <h3>🍚 Makanan Berat & Camilan Pengisi Energi</h3>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Nasi Ayam Sambel</div>
-                    <div class="item-desc">Nasi hangat dengan ayam goreng dan sambal pedas khas Bathara. Menu andalan!</div>
-                </div>
-                <div class="item-price">Rp 15.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Nasi Goreng</div>
-                    <div class="item-desc">Nasi yang digoreng dengan bumbu rempah spesial dan topping telur dadar.</div>
-                </div>
-                <div class="item-price">Rp 13.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Nasi Bakar Ayam Suwir</div>
-                    <div class="item-desc">Nasi yang dibakar dengan daun pisang, berisi ayam suwir pedas. Aromanya menggugah selera.</div>
-                </div>
-                <div class="item-price">Rp 15.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Nasi Telur Sambel</div>
-                    <div class="item-desc">Nasi hangat dengan telur dadar/ceplok dan sambal pedas.</div>
-                </div>
-                <div class="item-price">Rp 13.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Bakmi Asin</div>
-                    <div class="item-desc">Mie goreng dengan bumbu asin gurih, disajikan dengan bakso dan sayuran.</div>
-                </div>
-                <div class="item-price">Rp 15.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Kentang Goreng</div>
-                    <div class="item-desc">Kentang goreng renyah disajikan dengan saus sambal dan mayonaise.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Tahu Krispi</div>
-                    <div class="item-desc">Tahu yang digoreng hingga krispi, gurih dan nikmat.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Cireng Ayam Suwir</div>
-                    <div class="item-desc">Cireng dengan isian ayam suwir pedas, kenyal di luar, pedas di dalam.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Dimsum Mentai</div>
-                    <div class="item-desc">Dimsum dengan saus mentai yang dibakar sebentar.</div>
-                </div>
-                <div class="item-price">Rp 12.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Mix Platter</div>
-                    <div class="item-desc">Campuran snack seperti sosis, nugget, dan kentang. Cocok untuk sharing.</div>
-                </div>
-                <div class="item-price">Rp 13.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Tempe Mendoan</div>
-                    <div class="item-desc">Tempe yang digoreng setengah matang dengan adonan tepung berbumbu.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-info">
-                    <div class="item-name">Sosis Goreng</div>
-                    <div class="item-desc">Sosis yang digoreng dan disajikan dengan saus favorit Anda.</div>
-                </div>
-                <div class="item-price">Rp 10.000</div>
-            </div>
-        </div>
     </section>
 
     <section id="about" class="page">
         <h2>🛠️ Tentang Kedai Bathara</h2>
         <p>Kedai Bathara didirikan dengan semangat untuk menyajikan kopi lokal terbaik di Kediri. Nama "Bathara" diambil dari mitologi Jawa, melambangkan keagungan dan kualitas. Kami percaya bahwa setiap cangkir kopi harus memiliki cerita dan karakter. Dengan suasana vintage yang hangat, kami mengundang Anda untuk bersantai, menikmati setiap tegukan, dan merasa seperti di rumah sendiri.</p>
         <p>Kami berkomitmen menggunakan bahan-bahan segar, mulai dari biji kopi pilihan hingga rempah-rempah asli. Baik Anda mencari tempat untuk bekerja, bertemu teman, atau sekadar me-time, Kedai Bathara adalah pilihan yang tepat. Selamat datang di kedai kami!</p>
-        
     </section>
 
     <footer class="footer">
@@ -519,25 +692,113 @@
     </footer>
 
     <script>
+        // Data Keranjang
+        let cart = {}; 
+
+        // Fungsi Navigasi Halaman
         function showPage(pageId) {
-            // Sembunyikan semua halaman
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => {
                 page.classList.remove('active');
             });
 
-            // Tampilkan halaman yang diminta
             const activePage = document.getElementById(pageId);
             if (activePage) {
                 activePage.classList.add('active');
             }
-
-            // Atur ulang scroll ke atas
             window.scrollTo(0, 0);
         }
 
-        // Tampilkan halaman 'home' saat pertama kali dimuat (Sudah diatur di HTML dengan class 'active')
-        // showPage('home'); 
+        // Fungsi Format Mata Uang Rupiah
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        }
+
+        // Fungsi Tambah ke Keranjang
+        function addToCart(itemName, price) {
+            if (cart[itemName]) {
+                // Jika item sudah ada, tambahkan jumlahnya
+                cart[itemName].quantity += 1;
+            } else {
+                // Jika item belum ada, buat item baru
+                cart[itemName] = { price: price, quantity: 1 };
+            }
+
+            updateCartDisplay();
+        }
+
+        // Fungsi Update Tampilan Keranjang
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cart-items');
+            const totalElement = document.getElementById('total-price');
+            const emptyMessage = document.getElementById('empty-cart-message');
+            
+            cartList.innerHTML = ''; // Bersihkan daftar lama
+            let totalPrice = 0;
+            let cartEmpty = true;
+
+            for (const item in cart) {
+                if (cart[item].quantity > 0) {
+                    cartEmpty = false;
+                    const itemData = cart[item];
+                    const itemTotal = itemData.price * itemData.quantity;
+                    totalPrice += itemTotal;
+
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <span>${itemData.quantity}x ${item}</span>
+                        <span>${formatRupiah(itemTotal)}</span>
+                    `;
+                    cartList.appendChild(listItem);
+                }
+            }
+
+            // Tampilkan atau sembunyikan pesan keranjang kosong
+            if (cartEmpty) {
+                const emptyItem = document.createElement('li');
+                emptyItem.id = 'empty-cart-message';
+                emptyItem.textContent = 'Keranjang masih kosong.';
+                cartList.appendChild(emptyItem);
+            }
+
+            // Update Total Harga
+            totalElement.textContent = formatRupiah(totalPrice);
+        }
+        
+        // Fungsi Checkout (Contoh)
+        function checkout() {
+            if (Object.keys(cart).length === 0 || Object.values(cart).every(item => item.quantity === 0)) {
+                alert('Keranjang Anda kosong! Silakan pilih menu terlebih dahulu.');
+                return;
+            }
+            
+            let orderSummary = "Pesanan Anda:\n";
+            let finalTotal = 0;
+            
+            for (const item in cart) {
+                if (cart[item].quantity > 0) {
+                    const itemData = cart[item];
+                    const itemTotal = itemData.price * itemData.quantity;
+                    finalTotal += itemTotal;
+                    orderSummary += `${itemData.quantity}x ${item} (${formatRupiah(itemTotal)})\n`;
+                }
+            }
+            
+            orderSummary += `\nTotal Akhir: ${formatRupiah(finalTotal)}`;
+            
+            alert(orderSummary + "\n\nTerima kasih telah memesan di Kedai Bathara! Pesanan Anda akan segera diproses.");
+            
+            // Reset keranjang setelah checkout (opsional)
+            cart = {};
+            updateCartDisplay();
+        }
+
+        // Inisialisasi tampilan keranjang saat dimuat
+        document.addEventListener('DOMContentLoaded', updateCartDisplay);
     </script>
 </body>
 </html>
