@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Bathara | Ngopi Santai, Rasa Membahana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variabel Warna Retro */
+        :root {
+            --color-primary: #8b4513; /* Cokelat Tua (Kopi) */
+            --color-secondary: #f0e68c; /* Kuning Pucat (Khaki) */
+            --color-accent: #a52a2a; /* Merah Bata/Karat */
+            --color-text-dark: #36454F;
+            --color-text-light: #f5f5dc;
+            --color-background: #fff8e1;
+            --font-main: 'Roboto Slab', serif;
+            --font-heading: 'Oswald', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .header {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--color-secondary);
+            text-shadow: 2px 2px var(--color-accent);
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 1.1em;
+            font-family: var(--font-heading);
+            margin-left: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-links button:hover {
+            color: var(--color-secondary);
+            text-shadow: 1px 1px var(--color-accent);
+        }
+
+        .page {
+            min-height: 80vh;
+            padding: 50px 5%;
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Halaman Beranda */
+        #home {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://picsum.photos/1200/800?random=1') no-repeat center center/cover;
+            color: var(--color-text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        #home h1 {
+            font-family: var(--font-heading);
+            font-size: 4em;
+            margin-bottom: 0.5em;
+            border: 5px solid var(--color-secondary);
+            padding: 10px 20px;
+            display: inline-block;
+            background-color: rgba(139, 69, 19, 0.7);
+        }
+
+        .cta-button {
+            background-color: var(--color-accent);
+            color: var(--color-text-light);
+            border: 3px solid var(--color-secondary);
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-family: var(--font-heading);
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px var(--color-text-dark);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Halaman Menu */
+        .menu-category {
+            margin-bottom: 50px;
+            background-color: #fcebb6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 6px 6px 0px var(--color-primary);
+        }
+
+        .menu-category h3 {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            color: var(--color-accent);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center; /* Perataan vertikal untuk item dan gambar */
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--color-text-dark);
+        }
+        
+        .item-image {
+            width: 80px; /* Ukuran gambar menu */
+            height: 80px;
+            min-width: 80px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid var(--color-accent);
+        }
+
+        .item-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+        
+        .item-name {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--color-primary);
+        }
+
+        .item-desc {
+            font-size: 0.9em;
+            color: var(--color-text-dark);
+            margin-top: 5px;
+        }
+
+        .item-price {
+            font-family: var(--font-heading);
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--color-accent);
+            background-color: var(--color-secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        /* Media Queries untuk Responsif */
+        @media (max-width: 600px) {
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-image {
+                margin-bottom: 10px;
+            }
+            .item-content {
+                width: 100%;
+            }
+            .item-price {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">Kedai Bathara</div>
+        <nav class="nav-links">
+            <button onclick="showPage('home')" id="nav-home">Beranda</button>
+            <button onclick="showPage('about')" id="nav-about">Tentang Kami</button>
+        </nav>
+    </header>
+
+    <main id="home" class="page active">
+        <h1>Ngopi Santai, Rasa Membahana</h1>
+        <p>Tempat ngopi terbaik dengan suasana *vintage* dan cita rasa kopi lokal Kediri.</p>
+        <button class="cta-button" onclick="showPage('menu')">Lihat Menu Kami</button>
+    </main>
+
+    <section id="menu" class="page">
+        <h2>📜 Menu Pilihan Kedai Bathara ☕</h2>
+
+        <div class="menu-category">
+            <h3>☕ Kopi Klasik & Kekinian</h3>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=11" alt="Americano" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Americano</div>
+                        <div class="item-desc">Espresso murni disajikan dengan air panas/dingin. Pilihan *classic* untuk pecinta kopi sejati.</div>
+                    </div>
+                    <div class="item-price">Rp 8.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=12" alt="Kopi Susu" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu</div>
+                        <div class="item-desc">Paduan espresso, susu, dan gula aren yang manis dan creamy. Sederhana, namun selalu nikmat.</div>
+                    </div>
+                    <div class="item-price">Rp 8.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=13" alt="Kopi Susu Butter" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu Butter</div>
+                        <div class="item-desc">Kopi susu yang ditambah *butter* untuk rasa gurih dan *body* yang lebih tebal. Wajib coba!</div>
+                    </div>
+                    <div class="item-price">Rp 12.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=14" alt="Vietnam Drip" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Vietnam Drip</div>
+                        <div class="item-desc">Kopi tubruk pekat khas Vietnam yang diteteskan perlahan, dicampur susu kental manis.</div>
+                    </div>
+                    <div class="item-price">Rp 8.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=15" alt="Kopi Susu O" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Kopi Susu O</div>
+                        <div class="item-desc">Racikan kopi susu otentik dengan resep rahasia Bathara. Lebih unik dan kuat rasanya.</div>
+                    </div>
+                    <div class="item-price">Rp 9.000</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>🥛 Non-Kopi & Teh Segar</h3>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=21" alt="Susu" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Susu</div>
+                        <div class="item-desc">Susu murni (panas/dingin). Pilihan sederhana yang menyehatkan.</div>
+                    </div>
+                    <div class="item-price">Rp 8.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=22" alt="Susu Jahe" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Susu Jahe</div>
+                        <div class="item-desc">Susu panas dengan jahe bakar yang menghangatkan, cocok untuk malam yang dingin.</div>
+                    </div>
+                    <div class="item-price">Rp 9.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=23" alt="Milktea" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Milktea</div>
+                        <div class="item-desc">Teh hitam dengan susu, perpaduan sempurna antara pahit dan manis.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=24" alt="Lychee Tea" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Lychee Tea</div>
+                        <div class="item-desc">Teh dengan rasa leci yang manis dan aroma buah yang menyegarkan.</div>
+                    </div>
+                    <div class="item-price">Rp 12.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=25" alt="Lemon Tea" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Lemon Tea</div>
+                        <div class="item-desc">Teh dengan perasan lemon asli. Segar, asam, dan manis.</div>
+                    </div>
+                    <div class="item-price">Rp 12.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=26" alt="Coklat Panas/Dingin" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Cokelat Panas/Dingin</div>
+                        <div class="item-desc">Cokelat premium yang kental dan kaya rasa. Kenyamanan dalam setiap tegukan.</div>
+                    </div>
+                    <div class="item-price">Rp 12.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=27" alt="Matcha Latte" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Matcha Latte</div>
+                        <div class="item-desc">Teh hijau Jepang yang lembut, disajikan dengan susu creamy.</div>
+                    </div>
+                    <div class="item-price">Rp 14.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=28" alt="Red Velvet" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Red Velvet</div>
+                        <div class="item-desc">Minuman *velvet* dengan rasa *cream cheese* yang unik dan warna merah memukau.</div>
+                    </div>
+                    <div class="item-price">Rp 14.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=29" alt="Cookies and Cream" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Cookies and Cream</div>
+                        <div class="item-desc">Campuran biskuit dan krim yang manis dan *crunchy*.</div>
+                    </div>
+                    <div class="item-price">Rp 14.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=30" alt="Taro" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Taro</div>
+                        <div class="item-desc">Minuman ubi talas dengan rasa manis *earthy* dan warna ungu yang khas.</div>
+                    </div>
+                    <div class="item-price">Rp 13.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=31" alt="Banana Cream" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Banana Cream</div>
+                        <div class="item-desc">Perpaduan pisang dan krim yang lembut dan manis. Rasa yang unik dan menyegarkan.</div>
+                    </div>
+                    <div class="item-price">Rp 13.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=32" alt="Joshua" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Joshua (Jus Soda U-Enak)</div>
+                        <div class="item-desc">Minuman soda dengan sirup dan sedikit perasan jeruk nipis.</div>
+                    </div>
+                    <div class="item-price">Rp 7.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=33" alt="Squash Melon" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Squash Melon</div>
+                        <div class="item-desc">Minuman *squash* rasa melon yang dingin dan menyegarkan.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=34" alt="Squash Leci" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Squash Leci</div>
+                        <div class="item-desc">Minuman *squash* rasa leci dengan potongan buah.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>🍚 Makanan Berat & Camilan Pengisi Energi</h3>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=41" alt="Nasi Ayam Sambel" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Ayam Sambel</div>
+                        <div class="item-desc">Nasi hangat dengan ayam goreng dan sambal pedas khas Bathara. Menu andalan!</div>
+                    </div>
+                    <div class="item-price">Rp 15.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=42" alt="Nasi Goreng" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Goreng</div>
+                        <div class="item-desc">Nasi yang digoreng dengan bumbu rempah spesial dan *topping* telur.</div>
+                    </div>
+                    <div class="item-price">Rp 13.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=43" alt="Nasi Bakar Ayam Suwir" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Bakar Ayam Suwir</div>
+                        <div class="item-desc">Nasi yang dibakar dengan daun pisang, berisi ayam suwir pedas. Aromanya menggugah selera.</div>
+                    </div>
+                    <div class="item-price">Rp 15.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=44" alt="Nasi Telur Sambel" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Nasi Telur Sambel</div>
+                        <div class="item-desc">Nasi hangat dengan telur dadar/ceplok dan sambal pedas *homemade*.</div>
+                    </div>
+                    <div class="item-price">Rp 13.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=45" alt="Bakmi Asin" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Bakmi Asin</div>
+                        <div class="item-desc">Mie goreng dengan bumbu asin gurih, disajikan dengan bakso dan sayuran.</div>
+                    </div>
+                    <div class="item-price">Rp 15.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=46" alt="Kentang Goreng" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Kentang Goreng</div>
+                        <div class="item-desc">Kentang goreng renyah disajikan dengan saus sambal dan mayonaise.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=47" alt="Tahu Krispi" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Tahu Krispi</div>
+                        <div class="item-desc">Tahu yang digoreng hingga krispi, gurih dan nikmat.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=48" alt="Cireng Ayam Suwir" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Cireng Ayam Suwir</div>
+                        <div class="item-desc">Cireng dengan isian ayam suwir pedas, kenyal di luar, pedas di dalam.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=49" alt="Dimsum Mentai" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Dimsum Mentai</div>
+                        <div class="item-desc">Dimsum kukus/goreng dengan saus mentai yang dibakar sebentar.</div>
+                    </div>
+                    <div class="item-price">Rp 12.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=50" alt="Mix Platter" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Mix Platter</div>
+                        <div class="item-desc">Campuran *snack* seperti sosis, *nugget*, dan kentang. Cocok untuk *sharing*.</div>
+                    </div>
+                    <div class="item-price">Rp 13.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=51" alt="Tempe Mendoan" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Tempe Mendoan</div>
+                        <div class="item-desc">Tempe yang digoreng setengah matang dengan adonan tepung berbumbu.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://picsum.photos/80/80?random=52" alt="Sosis Goreng" class="item-image">
+                <div class="item-content">
+                    <div class="item-info">
+                        <div class="item-name">Sosis Goreng</div>
+                        <div class="item-desc">Sosis yang digoreng dan disajikan dengan saus favorit Anda.</div>
+                    </div>
+                    <div class="item-price">Rp 10.000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page">
+        <h2>🛠️ Tentang Kedai Bathara</h2>
+        <p>Kedai Bathara didirikan dengan semangat untuk menyajikan kopi lokal terbaik di Kediri. Nama "Bathara" diambil dari mitologi Jawa, melambangkan keagungan dan kualitas. Kami percaya bahwa setiap cangkir kopi harus memiliki cerita dan karakter. Dengan suasana *retro* yang hangat, kami mengundang Anda untuk bersantai, menikmati setiap tegukan, dan merasa seperti di rumah sendiri.</p>
+        <p>Kami berkomitmen menggunakan bahan-bahan segar, mulai dari biji kopi pilihan hingga rempah-rempah asli. Baik Anda mencari tempat untuk bekerja, bertemu teman, atau sekadar menikmati *me-time*, Kedai Bathara adalah pilihan yang tepat. Selamat datang di kedai kami!</p>
+    </section>
+
+    <footer class="footer">
+        &copy; 2025 Kedai Bathara. Dibuat dengan semangat Retro. | Alamat: Jl. Kopi Santai No. 100, Kediri.
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Sembunyikan semua halaman
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Tampilkan halaman yang diminta
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+            }
+
+            // Atur ulang scroll ke atas
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
