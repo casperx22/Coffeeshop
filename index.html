@@ -520,7 +520,9 @@
         &copy; 2025 Kedai Bathara. Dibuat dengan semangat 45 | Alamat: Jl. Jaka Muda No. 22, Kota Kediri.
     </footer>
 
-    <script>
+  <script>
+        let selectedItemPrice = 0; // Menyimpan harga item yang sedang dipilih
+
         function showPage(pageId) {
             // Sembunyikan semua halaman
             const pages = document.querySelectorAll('.page');
@@ -536,6 +538,89 @@
 
             // Atur ulang scroll ke atas
             window.scrollTo(0, 0);
+        }
+        
+        // --- FUNGSI MODAL ---
+        function showModal(element) {
+            const itemElement = element.closest('.menu-item');
+            
+            // 1. Ambil Data dari Item Menu yang diklik
+            const name = itemElement.querySelector('.item-name').innerText;
+            const desc = itemElement.querySelector('.item-desc').innerText;
+            const priceText = itemElement.querySelector('.item-price').innerText; // Contoh: "Rp 8.000"
+            
+            // 2. Bersihkan dan Konversi Harga ke Angka
+            const priceCleaned = priceText.replace(/[^\d]/g, ''); // Hapus "Rp" dan titik
+            selectedItemPrice = parseInt(priceCleaned, 10);
+
+            // 3. Isi Data ke Modal
+            document.getElementById('modal-item-name').innerText = name;
+            document.getElementById('modal-item-desc').innerText = desc;
+            document.getElementById('modal-item-price-text').innerText = priceText;
+            document.getElementById('quantity').value = 1; // Reset jumlah pesanan
+            
+            // 4. Hitung dan Tampilkan Total Awal
+            updateTotal();
+
+            // 5. Tampilkan Modal
+            document.getElementById('orderModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let currentQty = parseInt(quantityInput.value, 10);
+            
+            currentQty += change;
+            
+            if (currentQty < 1) {
+                currentQty = 1;
+            }
+            
+            quantityInput.value = currentQty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const total = selectedItemPrice * quantity;
+            
+            // Format angka kembali ke format mata uang Rupiah
+            const totalText = 'Rp ' + total.toLocaleString('id-ID');
+
+            document.getElementById('modal-total-price').innerText = totalText;
+        }
+
+        function addToCart() {
+            const itemName = document.getElementById('modal-item-name').innerText;
+            const quantity = document.getElementById('quantity').value;
+            const total = document.getElementById('modal-total-price').innerText;
+            
+            alert(`✅ Pesanan Ditambahkan!\n\nItem: ${itemName}\nJumlah: ${quantity}\nTotal: ${total}\n\nFitur keranjang nyata akan hadir di versi berikutnya!`);
+            
+            closeModal();
+        }
+
+        // Tambahkan event listener untuk menutup modal saat mengklik di luar area modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Pasang Event Listener pada setiap harga menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const priceElements = document.querySelectorAll('.menu-item .item-price');
+            priceElements.forEach(priceEl => {
+                priceEl.style.cursor = 'pointer'; // Menunjukkan bahwa ini dapat diklik
+                priceEl.setAttribute('onclick', 'showModal(this)'); // Memanggil fungsi showModal
+            });
+        });
+    </script>
         }
 
     </script>
