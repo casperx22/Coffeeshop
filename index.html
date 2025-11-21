@@ -81,7 +81,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            display: none; /* Disembunyikan secara default */
+            display: none; 
             line-height: 1;
         }
 
@@ -107,7 +107,7 @@
             display: block;
         }
 
-        /* --- Home, Menu, About Styling (CSS lama yang relevan) --- */
+        /* --- Styling Konten (dipertahankan) --- */
         #home {
             text-align: center;
             display: flex;
@@ -187,9 +187,9 @@
             transition: transform 0.1s;
         }
         .item-price:active { transform: scale(0.95); }
-        /* --- Akhir Styling Lama --- */
+        /* --- Akhir Styling Konten --- */
 
-        /* --- BASE MODAL STYLING (Digunakan untuk semua modal) --- */
+        /* --- BASE MODAL STYLING --- */
         .modal {
             display: none;
             position: fixed;
@@ -227,80 +227,12 @@
             color: var(--color-primary);
             margin-top: 0;
         }
-        .add-to-cart-button, .checkout-button, .pay-button {
-            width: 100%;
-            background-color: var(--color-accent);
-            color: var(--color-text-light);
-            border: 2px solid var(--color-primary);
-            padding: 15px;
-            font-size: 1.2em;
-            font-family: var(--font-heading);
-            cursor: pointer;
-            margin-top: 20px;
-            text-transform: uppercase;
-            transition: background-color 0.3s;
-            border-radius: 8px;
-        }
-        /* --- Quantity Control (dari modal pesan) --- */
-        .modal-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-        }
-        .quantity-control { display: flex; align-items: center; }
-        .quantity-control button {
-            background-color: var(--color-primary);
-            color: var(--color-text-light);
-            border: none;
-            padding: 5px 10px;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin: 0 5px;
-            border-radius: 5px;
-        }
-        #quantity {
-            width: 50px;
-            text-align: center;
-            border: 1px solid var(--color-primary);
-            font-size: 1.2em;
-            font-family: var(--font-main);
-            padding: 5px;
-        }
+        /* --- Detail Styling (dipertahankan) --- */
         .modal-total {
             font-family: var(--font-heading);
             font-size: 1.8em;
             color: var(--color-accent);
             margin: 20px 0;
-        }
-        /* --- Styling Keranjang (Cart Modal) --- */
-        #cart-items-list {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px dashed var(--color-text-dark);
-            font-size: 1.1em;
-        }
-        .cart-item-name {
-            font-weight: 700;
-        }
-        .cart-item-remove {
-            background: var(--color-accent);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            line-height: 1;
-            cursor: pointer;
-            font-size: 1em;
-            margin-left: 10px;
         }
         /* --- Styling Pembayaran (Payment Modal) --- */
         .payment-options {
@@ -322,13 +254,12 @@
             background-color: var(--color-secondary);
         }
         .payment-option img {
-            /* Perbaikan/Penyesuaian ukuran gambar */
-            width: 60px; /* Lebih lebar untuk logo bank */
-            max-height: 35px; /* Batasi tinggi */
-            object-fit: contain; /* Pastikan gambar dimuat penuh */
+            width: 60px; 
+            max-height: 35px; 
+            object-fit: contain; 
             margin-right: 15px;
             border-radius: 4px;
-            background-color: white; /* Untuk logo yang transparan */
+            background-color: white; 
             padding: 2px;
         }
         .payment-option span {
@@ -345,12 +276,41 @@
             border-top: 1px solid var(--color-primary);
             padding-top: 15px;
         }
-
+        /* Style untuk gambar QRIS yang berfungsi sebagai tombol */
+        #qris-button-image {
+            width: 100%;
+            max-width: 200px; /* Batasi lebar agar tidak terlalu besar di daftar */
+            height: auto;
+            border: 3px solid var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        #qris-button-image:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Style untuk Modal Tampilan QRIS Penuh */
+        #qrisModalContent {
+            text-align: center;
+            padding: 20px;
+        }
+        #qrisModalContent h4 {
+            color: var(--color-primary);
+            font-family: var(--font-heading);
+            font-size: 1.8em;
+        }
+        #qrisModalContent img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 5px solid var(--color-accent);
+            margin-bottom: 15px;
+        }
         /* Responsif Sederhana */
         @media (max-width: 768px) {
             .logo { font-size: 1.5em; }
-            .nav-links button, .cart-button { font-size: 0.9em; margin-left: 10px; }
-            #home h1 { font-size: 3em; }
         }
     </style>
 </head>
@@ -675,44 +635,39 @@
                 Total Tagihan: <span id="payment-final-total">Rp 0</span>
             </div>
 
-            <div class="payment-options">
-                <div class="payment-group-title">E-Wallet</div>
-                <div class="payment-option" onclick="processPayment('Dana')">
-                    <img src="https://i.pinimg.com/1200x/f5/8c/a3/f58ca3528b238877e9855fcac1daa328.jpg" alt="Logo Dana"> <span>Dana</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('Ovo')">
-                    <img src="https://i.pinimg.com/73x/76/1a/bf/761abfb9e4c628b0f4b9943c390e93b3.jpg" alt="Logo Ovo"> <span>OVO</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('Gopay')">
-                    <img src="https://i.pinimg.com/1200x/fa/6a/d4/fa6ad42f710af94307383078f076d771.jpg" alt="Logo Gopay"> <span>Gopay</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('ShopeePay')">
-                    <img src="https://i.pinimg.com/73x/d4/ef/ff/d4efff3364225524d708e22efc0bfedf.jpg" alt="Logo ShopeePay"> <span>ShopeePay</span>
-                </div>
+            <div class="payment-options" style="text-align: center;">
+                
+                <div class="payment-group-title">Bayar dengan QRIS (Tap Gambar di bawah)</div>
+                <img id="qris-button-image" onclick="showQrisModal()" 
+                     src="images/qris_farel.jpg" 
+                     alt="Tap untuk Scan QRIS"> 
+                
+                <hr style="margin: 20px 0;">
 
-                <div class="payment-group-title" style="margin-top: 20px;">Transfer Bank</div>
-                <div class="payment-option" onclick="processPayment('BRI')">
-                    <img src="https://i.pinimg.com/1200x/6b/13/7a/6b137a6a174c2f054904a3be35fe249f.jpg" alt="Logo BRI"> <span>Bank Rakyat Indonesia (BRI)</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('BCA')">
-                    <img src="https://i.pinimg.com/73x/c7/45/14/c74514191cb44fa9d0419f1ffb4c9194.jpg" alt="Logo BCA"> <span>Bank Central Asia (BCA)</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('BNI')">
-                    <img src="https://i.pinimg.com/73x/f0/19/75/f0197547f439446d45c5429234c76d3e.jpg" alt="Logo BNI"> <span>Bank Negara Indonesia (BNI)</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('Mandiri')">
-                    <img src="https://i.pinimg.com/73x/27/71/54/2771540fa7259e0bd0cdfae464385480.jpg" alt="Logo Mandiri"> <span>Bank Mandiri</span>
-                </div>
-                <div class="payment-option" onclick="processPayment('Bank Jatim')">
-                    <img src="https://i.pinimg.com/73x/36/9a/af/369aafc1b74a85c67d23a461cfca789d.jpg" alt="Logo Bank Jatim"> <span>Bank Jatim</span>
-                </div>
-
-                <div class="payment-group-title" style="margin-top: 20px;">Lainnya</div>
+                <div class="payment-group-title">Pembayaran Langsung</div>
                 <div class="payment-option" onclick="processPayment('COD')">
-                    <img src="https://i.pinimg.com/73x/43/75/1f/43751fbad35c3bf1b28a14fc8de2f91f.jpg" alt="Logo COD"> <span>Cash On Delivery (COD)</span>
+                    <img src="https://i.pinimg.com/73x/43/75/1f/43751fbad35c3bf1b28a14fc8de2f91f.jpg" alt="Logo COD"> 
+                    <span>Cash On Delivery (Bayar di Tempat)</span>
                 </div>
-
             </div>
+            
+        </div>
+    </div>
+    <div id="qrisDetailModal" class="modal">
+        <div class="modal-content" id="qrisModalContent">
+            <span class="close-button" onclick="closeModal('qrisDetailModal')">&times;</span>
+            <h4>SCAN QRIS UNTUK MEMBAYAR</h4>
+            <p>Silakan pindai kode QR di bawah ini menggunakan aplikasi perbankan atau e-wallet apa pun.</p>
+            
+            <img id="qris-full-image" src="images/qris_farel.jpg" alt="Kode QRIS Penuh">
+            
+            <p style="font-size: 1.5em; font-weight: bold;">
+                Total Tagihan: <span id="qris-final-total-display">Rp 0</span>
+            </p>
+            
+            <button class="add-to-cart-button" onclick="finalizePayment('QRIS')">
+                ✅ Saya Sudah Bayar (Konfirmasi Pembayaran)
+            </button>
         </div>
     </div>
     <footer class="footer">
@@ -721,23 +676,14 @@
 
     <script>
         // --- LOGIKA KERANJANG GLOBAL ---
-        let selectedItem = {}; // Menyimpan detail item yang sedang dipilih di orderModal
-        let cart = []; // Array utama untuk menyimpan semua item di keranjang
+        let selectedItem = {}; 
+        let cart = []; 
 
         function showPage(pageId) {
-            // Sembunyikan semua halaman
             const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-
-            // Tampilkan halaman yang diminta
+            pages.forEach(page => { page.classList.remove('active'); });
             const activePage = document.getElementById(pageId);
-            if (activePage) {
-                activePage.classList.add('active');
-            }
-
-            // Tutup semua modal saat pindah halaman
+            if (activePage) { activePage.classList.add('active'); }
             closeAllModals(); 
             window.scrollTo(0, 0);
         }
@@ -746,39 +692,27 @@
             document.getElementById('orderModal').style.display = 'none';
             document.getElementById('cartModal').style.display = 'none';
             document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('qrisDetailModal').style.display = 'none'; // Tambah modal QRIS
         }
 
         function formatRupiah(number) {
-            // Mengubah angka menjadi string format Rupiah (ex: 10.000)
             return 'Rp ' + number.toLocaleString('id-ID');
         }
 
-        // --- FUNGSI MODAL PESANAN (Item Tunggal) ---
+        // --- FUNGSI MODAL PESANAN & KERANJANG (dipertahankan) ---
         function showModal(element) {
             const itemElement = element.closest('.menu-item');
-            
-            // 1. Ambil Data dari Item Menu yang diklik
             const name = itemElement.querySelector('.item-name').innerText;
             const desc = itemElement.querySelector('.item-desc').innerText;
-            const priceText = itemElement.querySelector('.item-price').innerText; // Contoh: "Rp 8.000"
-            
-            // Bersihkan dan Konversi Harga ke Angka
+            const priceText = itemElement.querySelector('.item-price').innerText; 
             const priceCleaned = priceText.replace(/[^\d]/g, ''); 
             const price = parseInt(priceCleaned, 10);
-
-            // Simpan detail item ke variabel global
             selectedItem = { name, price, desc };
-
-            // 2. Isi Data ke Modal
             document.getElementById('modal-item-name').innerText = selectedItem.name;
             document.getElementById('modal-item-desc').innerText = selectedItem.desc;
             document.getElementById('modal-item-price-text').innerText = priceText;
-            document.getElementById('quantity').value = 1; // Reset jumlah pesanan
-            
-            // 3. Hitung dan Tampilkan Total Awal
+            document.getElementById('quantity').value = 1; 
             updateTotal();
-
-            // 4. Tampilkan Modal
             document.getElementById('orderModal').style.display = 'block';
         }
 
@@ -789,13 +723,8 @@
         function changeQuantity(change) {
             const quantityInput = document.getElementById('quantity');
             let currentQty = parseInt(quantityInput.value, 10);
-            
             currentQty += change;
-            
-            if (currentQty < 1) {
-                currentQty = 1;
-            }
-            
+            if (currentQty < 1) { currentQty = 1; }
             quantityInput.value = currentQty;
             updateTotal();
         }
@@ -803,31 +732,23 @@
         function updateTotal() {
             const quantity = parseInt(document.getElementById('quantity').value, 10);
             const total = selectedItem.price * quantity;
-            
             document.getElementById('modal-total-price').innerText = formatRupiah(total);
         }
 
         function addToCart() {
             const quantity = parseInt(document.getElementById('quantity').value, 10);
-            
             const item = {
                 name: selectedItem.name,
                 price: selectedItem.price,
                 quantity: quantity,
                 total: selectedItem.price * quantity
             };
-
-            // Tambahkan item ke keranjang
             cart.push(item);
-            
             closeModal('orderModal');
             updateCartDisplay();
-
-            // Tampilkan pesan konfirmasi singkat
             alert(`✅ ${quantity}x ${item.name} berhasil ditambahkan ke Keranjang!`);
         }
 
-        // --- FUNGSI KERANJANG (Cart Modal) ---
         function calculateCartTotal() {
             return cart.reduce((sum, item) => sum + item.total, 0);
         }
@@ -839,7 +760,7 @@
             const checkoutBtn = document.getElementById('checkout-btn');
             const emptyMessage = document.getElementById('empty-cart-message');
 
-            listElement.innerHTML = ''; // Kosongkan daftar
+            listElement.innerHTML = ''; 
 
             if (cart.length === 0) {
                 badgeElement.style.display = 'none';
@@ -852,7 +773,6 @@
             emptyMessage.style.display = 'none';
             checkoutBtn.disabled = false;
 
-            // Render item
             cart.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.className = 'cart-item';
@@ -866,7 +786,6 @@
                 listElement.appendChild(li);
             });
 
-            // Update Total dan Badge
             const total = calculateCartTotal();
             totalElement.innerText = formatRupiah(total);
             badgeElement.innerText = cart.length;
@@ -874,67 +793,67 @@
         }
 
         function showCartModal() {
-            updateCartDisplay(); // Pastikan data terbaru ditampilkan
+            updateCartDisplay(); 
             document.getElementById('cartModal').style.display = 'block';
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1); // Hapus item dari array
+            cart.splice(index, 1); 
             updateCartDisplay();
         }
 
-        // --- FUNGSI PEMBAYARAN (Payment Modal) ---
         function showPaymentModal() {
             const finalTotal = calculateCartTotal();
             document.getElementById('payment-final-total').innerText = formatRupiah(finalTotal);
             closeModal('cartModal');
             document.getElementById('paymentModal').style.display = 'block';
         }
-
-        function processPayment(method) {
+        
+        // --- FUNGSI BARU UNTUK MENAMPILKAN MODAL QRIS PENUH ---
+        function showQrisModal() {
             const finalTotal = calculateCartTotal();
-            
-            // Logika simulasi pembayaran
-            let message = '';
-            
+            document.getElementById('qris-final-total-display').innerText = formatRupiah(finalTotal);
+            closeModal('paymentModal');
+            document.getElementById('qrisDetailModal').style.display = 'block';
+        }
+        
+        // --- FUNGSI PEMBAYARAN BARU (QRIS & COD) ---
+        function processPayment(method) {
             if (method === 'COD') {
-                 message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
-            } else if (['Dana', 'Ovo', 'Gopay', 'ShopeePay'].includes(method)) {
-                // Simulasi membuka aplikasi E-Wallet
-                message = `🎉 PESANAN BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: ${method}\n\n[Simulasi Tautan]\n\nTap OK untuk menyelesaikan pembayaran di aplikasi ${method}.`;
-            } else if (method.includes('Bank')) {
-                // Simulasi transfer bank
-                const bankInfo = {
-                    'BRI': 'No. Rekening: 1234 5678 9000 (A/N Kedai Bathara BRI)',
-                    'BCA': 'No. Rekening: 0001 2345 6789 (A/N Kedai Bathara BCA)',
-                    'BNI': 'No. Rekening: 9876 5432 1000 (A/N Kedai Bathara BNI)',
-                    'Mandiri': 'No. Rekening: 1122 3344 5566 (A/N Kedai Bathara Mandiri)',
-                    'Bank Jatim': 'No. Rekening: 7777 8888 9999 (A/N Kedai Bathara Jatim)'
-                };
-                message = `🎉 PESANAN BERHASIL! 🎉\n\nMetode: Transfer ${method}\nTotal Tagihan: ${formatRupiah(finalTotal)}\n\nLakukan transfer sebelum 1x24 jam ke:\n${bankInfo[method]}\n\nPesanan akan diproses setelah konfirmasi pembayaran.`;
-            } else {
-                message = `Metode pembayaran ${method} tidak dikenali.`;
+                finalizePayment('COD');
             }
+        }
+
+        function finalizePayment(method) {
+             const finalTotal = calculateCartTotal();
+             let message = '';
+             
+             if (method === 'COD') {
+                 message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
+                 closeModal('paymentModal');
+             } else if (method === 'QRIS') {
+                 message = `✅ Pembayaran QRIS senilai ${formatRupiah(finalTotal)} telah kami terima (Simulasi).\n\nPesanan Anda akan segera diproses. Terima kasih!`;
+                 closeModal('qrisDetailModal');
+             }
             
             alert(message);
             
+            // Finalisasi dan reset
             cart = [];
             updateCartDisplay();
-            closeModal('paymentModal');
             showPage('home'); // Kembali ke beranda
         }
 
+        // --- INITIAL SETUP & GLOBAL LISTENER ---
         window.onclick = function(event) {
-            const orderModal = document.getElementById('orderModal');
-            const cartModal = document.getElementById('cartModal');
-            const paymentModal = document.getElementById('paymentModal');
-            
-            if (event.target == orderModal) closeModal('orderModal');
-            if (event.target == cartModal) closeModal('cartModal');
-            if (event.target == paymentModal) closeModal('paymentModal');
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    closeModal(modal.id);
+                }
+            });
         }
         
-        // Inisialisasi tampilan awal keranjang saat halaman dimuat
         document.addEventListener('DOMContentLoaded', updateCartDisplay);
     </script>
 </body>
