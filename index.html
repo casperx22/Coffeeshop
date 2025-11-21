@@ -322,10 +322,14 @@
             background-color: var(--color-secondary);
         }
         .payment-option img {
-            width: 40px;
-            height: auto;
+            /* Perbaikan/Penyesuaian ukuran gambar */
+            width: 60px; /* Lebih lebar untuk logo bank */
+            max-height: 35px; /* Batasi tinggi */
+            object-fit: contain; /* Pastikan gambar dimuat penuh */
             margin-right: 15px;
             border-radius: 4px;
+            background-color: white; /* Untuk logo yang transparan */
+            padding: 2px;
         }
         .payment-option span {
             font-family: var(--font-heading);
@@ -677,13 +681,13 @@
                     <img src="https://i.pinimg.com/1200x/f5/8c/a3/f58ca3528b238877e9855fcac1daa328.jpg" alt="Logo Dana"> <span>Dana</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('Ovo')">
-                    <img src="https://i.pinimg.com/736x/76/1a/bf/761abfb9e4c628b0f4b9943c390e93b3.jpg" alt="Logo Ovo"> <span>OVO</span>
+                    <img src="https://i.pinimg.com/73x/76/1a/bf/761abfb9e4c628b0f4b9943c390e93b3.jpg" alt="Logo Ovo"> <span>OVO</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('Gopay')">
                     <img src="https://i.pinimg.com/1200x/fa/6a/d4/fa6ad42f710af94307383078f076d771.jpg" alt="Logo Gopay"> <span>Gopay</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('ShopeePay')">
-                    <img src="https://i.pinimg.com/736x/d4/ef/ff/d4efff3364225524d708e22efc0bfedf.jpg" alt="Logo ShopeePay"> <span>ShopeePay</span>
+                    <img src="https://i.pinimg.com/73x/d4/ef/ff/d4efff3364225524d708e22efc0bfedf.jpg" alt="Logo ShopeePay"> <span>ShopeePay</span>
                 </div>
 
                 <div class="payment-group-title" style="margin-top: 20px;">Transfer Bank</div>
@@ -691,7 +695,7 @@
                     <img src="https://i.pinimg.com/1200x/6b/13/7a/6b137a6a174c2f054904a3be35fe249f.jpg" alt="Logo BRI"> <span>Bank Rakyat Indonesia (BRI)</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('BCA')">
-                    <img src="https://i.pinimg.com/736x/c7/45/14/c74514191cb44fa9d0419f1ffb4c9194.jpg" alt="Logo BCA"> <span>Bank Central Asia (BCA)</span>
+                    <img src="https://i.pinimg.com/73x/c7/45/14/c74514191cb44fa9d0419f1ffb4c9194.jpg" alt="Logo BCA"> <span>Bank Central Asia (BCA)</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('BNI')">
                     <img src="https://i.pinimg.com/73x/f0/19/75/f0197547f439446d45c5429234c76d3e.jpg" alt="Logo BNI"> <span>Bank Negara Indonesia (BNI)</span>
@@ -753,22 +757,28 @@
         function showModal(element) {
             const itemElement = element.closest('.menu-item');
             
+            // 1. Ambil Data dari Item Menu yang diklik
             const name = itemElement.querySelector('.item-name').innerText;
             const desc = itemElement.querySelector('.item-desc').innerText;
-            const priceText = itemElement.querySelector('.item-price').innerText;
-        
+            const priceText = itemElement.querySelector('.item-price').innerText; // Contoh: "Rp 8.000"
+            
+            // Bersihkan dan Konversi Harga ke Angka
             const priceCleaned = priceText.replace(/[^\d]/g, ''); 
             const price = parseInt(priceCleaned, 10);
 
+            // Simpan detail item ke variabel global
             selectedItem = { name, price, desc };
 
+            // 2. Isi Data ke Modal
             document.getElementById('modal-item-name').innerText = selectedItem.name;
             document.getElementById('modal-item-desc').innerText = selectedItem.desc;
             document.getElementById('modal-item-price-text').innerText = priceText;
-            document.getElementById('quantity').value = 1; 
+            document.getElementById('quantity').value = 1; // Reset jumlah pesanan
             
+            // 3. Hitung dan Tampilkan Total Awal
             updateTotal();
 
+            // 4. Tampilkan Modal
             document.getElementById('orderModal').style.display = 'block';
         }
 
@@ -806,15 +816,18 @@
                 quantity: quantity,
                 total: selectedItem.price * quantity
             };
-            
+
+            // Tambahkan item ke keranjang
             cart.push(item);
             
             closeModal('orderModal');
             updateCartDisplay();
 
+            // Tampilkan pesan konfirmasi singkat
             alert(`✅ ${quantity}x ${item.name} berhasil ditambahkan ke Keranjang!`);
         }
 
+        // --- FUNGSI KERANJANG (Cart Modal) ---
         function calculateCartTotal() {
             return cart.reduce((sum, item) => sum + item.total, 0);
         }
@@ -826,7 +839,7 @@
             const checkoutBtn = document.getElementById('checkout-btn');
             const emptyMessage = document.getElementById('empty-cart-message');
 
-            listElement.innerHTML = '';
+            listElement.innerHTML = ''; // Kosongkan daftar
 
             if (cart.length === 0) {
                 badgeElement.style.display = 'none';
@@ -839,6 +852,7 @@
             emptyMessage.style.display = 'none';
             checkoutBtn.disabled = false;
 
+            // Render item
             cart.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.className = 'cart-item';
@@ -852,6 +866,7 @@
                 listElement.appendChild(li);
             });
 
+            // Update Total dan Badge
             const total = calculateCartTotal();
             totalElement.innerText = formatRupiah(total);
             badgeElement.innerText = cart.length;
@@ -859,15 +874,16 @@
         }
 
         function showCartModal() {
-            updateCartDisplay(); 
+            updateCartDisplay(); // Pastikan data terbaru ditampilkan
             document.getElementById('cartModal').style.display = 'block';
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1);
+            cart.splice(index, 1); // Hapus item dari array
             updateCartDisplay();
         }
 
+        // --- FUNGSI PEMBAYARAN (Payment Modal) ---
         function showPaymentModal() {
             const finalTotal = calculateCartTotal();
             document.getElementById('payment-final-total').innerText = formatRupiah(finalTotal);
@@ -878,19 +894,34 @@
         function processPayment(method) {
             const finalTotal = calculateCartTotal();
             
+            // Logika simulasi pembayaran
+            let message = '';
             
             if (method === 'COD') {
-                 alert(`🎉 Pesanan Berhasil!\n\nMetode: Cash On Delivery (COD)\nTotal Bayar: ${formatRupiah(finalTotal)}\n\nSiapkan uang tunai saat pesanan tiba. Terima kasih telah berbelanja di Kedai Bathara!`);
+                 message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
+            } else if (['Dana', 'Ovo', 'Gopay', 'ShopeePay'].includes(method)) {
+                // Simulasi membuka aplikasi E-Wallet
+                message = `🎉 PESANAN BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: ${method}\n\n[Simulasi Tautan]\n\nTap OK untuk menyelesaikan pembayaran di aplikasi ${method}.`;
             } else if (method.includes('Bank')) {
-                alert(`🎉 Pesanan Berhasil!\n\nMetode: Transfer ${method}\nTotal Bayar: ${formatRupiah(finalTotal)}\n\nSilakan transfer ke nomor rekening simulasi 1234567890 atas nama Kedai Bathara. Pesanan akan diproses setelah pembayaran terkonfirmasi.`);
+                // Simulasi transfer bank
+                const bankInfo = {
+                    'BRI': 'No. Rekening: 1234 5678 9000 (A/N Kedai Bathara BRI)',
+                    'BCA': 'No. Rekening: 0001 2345 6789 (A/N Kedai Bathara BCA)',
+                    'BNI': 'No. Rekening: 9876 5432 1000 (A/N Kedai Bathara BNI)',
+                    'Mandiri': 'No. Rekening: 1122 3344 5566 (A/N Kedai Bathara Mandiri)',
+                    'Bank Jatim': 'No. Rekening: 7777 8888 9999 (A/N Kedai Bathara Jatim)'
+                };
+                message = `🎉 PESANAN BERHASIL! 🎉\n\nMetode: Transfer ${method}\nTotal Tagihan: ${formatRupiah(finalTotal)}\n\nLakukan transfer sebelum 1x24 jam ke:\n${bankInfo[method]}\n\nPesanan akan diproses setelah konfirmasi pembayaran.`;
             } else {
-                alert(`🎉 Pesanan Berhasil!\n\nMetode: ${method}\nTotal Bayar: ${formatRupiah(finalTotal)}\n\nAplikasi ${method} akan dibuka untuk menyelesaikan pembayaran. Terima kasih!`);
+                message = `Metode pembayaran ${method} tidak dikenali.`;
             }
+            
+            alert(message);
             
             cart = [];
             updateCartDisplay();
             closeModal('paymentModal');
-            showPage('home'); 
+            showPage('home'); // Kembali ke beranda
         }
 
         window.onclick = function(event) {
@@ -898,13 +929,12 @@
             const cartModal = document.getElementById('cartModal');
             const paymentModal = document.getElementById('paymentModal');
             
-            if (event.target == orderModal || event.target == cartModal || event.target == paymentModal) {
-                if(event.target == orderModal) closeModal('orderModal');
-                if(event.target == cartModal) closeModal('cartModal');
-                if(event.target == paymentModal) closeModal('paymentModal');
-            }
+            if (event.target == orderModal) closeModal('orderModal');
+            if (event.target == cartModal) closeModal('cartModal');
+            if (event.target == paymentModal) closeModal('paymentModal');
         }
         
+        // Inisialisasi tampilan awal keranjang saat halaman dimuat
         document.addEventListener('DOMContentLoaded', updateCartDisplay);
     </script>
 </body>
