@@ -5,7 +5,361 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kedai Bathara | Ngopi Santai, Rasa Membahana</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Variabel Warna Retro */
+        :root {
+            --color-primary: #8b4513; /* Cokelat Tua (Kopi) */
+            --color-secondary: #f0e68c; /* Kuning Pucat (Khaki) */
+            --color-accent: #a52a2a; /* Merah Bata/Karat */
+            --color-text-dark: #36454F; /* Abu-abu Arang */
+            --color-text-light: #f5f5dc; /* Krem */
+            --color-background: #fff8e1; /* Kuning Pucat Lembut */
+            --font-main: 'Roboto Slab', serif;
+            --font-heading: 'Oswald', sans-serif;
+        }
+
+        /* Reset Dasar */
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Struktur Navigasi */
+        .header {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--color-secondary);
+            text-shadow: 2px 2px var(--color-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links button, .cart-button {
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 1.1em;
+            font-family: var(--font-heading);
+            margin-left: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            transition: color 0.3s, text-shadow 0.3s;
+            position: relative; 
+        }
+
+        /* Badge Keranjang */
+        .cart-badge {
+            background-color: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            padding: 3px 7px;
+            font-size: 0.7em;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: none; 
+            line-height: 1;
+        }
+
+        .nav-links button:hover, .cart-button:hover {
+            color: var(--color-secondary);
+            text-shadow: 1px 1px var(--color-accent);
+        }
+
+        /* Struktur Halaman */
+        .page {
+            min-height: 80vh;
+            padding: 50px 5%;
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* --- Home, Menu, About Styling --- */
+        #home {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://i.pinimg.com/1200x/f1/79/83/f17983147805f8d34257a3f3e2a6b8f5.jpg') no-repeat center center/cover;
+            color: var(--color-text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        #home h1 {
+            font-family: var(--font-heading);
+            font-size: 4em;
+            margin-bottom: 0.5em;
+            border: 5px solid var(--color-secondary);
+            padding: 10px 20px;
+            display: inline-block;
+            background-color: rgba(139, 69, 19, 0.7);
+        }
+        .cta-button {
+            background-color: var(--color-accent);
+            color: var(--color-text-light);
+            border: 3px solid var(--color-secondary);
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-family: var(--font-heading);
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px var(--color-text-dark);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        #menu h2 {
+            font-family: var(--font-heading);
+            font-size: 3em;
+            color: var(--color-primary);
+            border-bottom: 4px solid var(--color-accent);
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .menu-category {
+            margin-bottom: 50px;
+            background-color: #fcebb6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 6px 6px 0px var(--color-primary);
+        }
+        .menu-category h3 {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed var(--color-primary);
+            padding-bottom: 10px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--color-text-dark);
+        }
+        .item-name { font-weight: 700; font-size: 1.2em; color: var(--color-primary); }
+        .item-desc { font-size: 0.9em; color: var(--color-text-dark); margin-top: 5px; }
+        .item-price {
+            font-family: var(--font-heading);
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--color-accent);
+            background-color: var(--color-secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer; 
+            transition: transform 0.1s;
+        }
+        .item-price:active { transform: scale(0.95); }
+
+        /* --- BASE MODAL STYLING (Digunakan untuk semua modal) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding-top: 20px;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        .modal-content {
+            background-color: var(--color-background);
+            margin: 5% auto;
+            padding: 30px;
+            border: 5px solid var(--color-primary);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .close-button {
+            color: var(--color-accent);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #modal-item-name, #cart-title, #payment-title {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            color: var(--color-primary);
+            margin-top: 0;
+        }
+        .add-to-cart-button, .checkout-button, .pay-button {
+            width: 100%;
+            background-color: var(--color-accent);
+            color: var(--color-text-light);
+            border: 2px solid var(--color-primary);
+            padding: 15px;
+            font-size: 1.2em;
+            font-family: var(--font-heading);
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+            border-radius: 8px;
+        }
+        /* --- Quantity Control --- */
+        .modal-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .quantity-control { display: flex; align-items: center; }
+        .quantity-control button {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            border: none;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+        #quantity {
+            width: 50px;
+            text-align: center;
+            border: 1px solid var(--color-primary);
+            font-size: 1.2em;
+            font-family: var(--font-main);
+            padding: 5px;
+        }
+        .modal-total {
+            font-family: var(--font-heading);
+            font-size: 1.8em;
+            color: var(--color-accent);
+            margin: 20px 0;
+        }
+        /* --- Styling Keranjang (Cart Modal) --- */
+        #cart-items-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--color-text-dark);
+            font-size: 1.1em;
+        }
+        .cart-item-name {
+            font-weight: 700;
+        }
+        .cart-item-remove {
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            line-height: 1;
+            cursor: pointer;
+            font-size: 1em;
+            margin-left: 10px;
+        }
+        /* --- Styling Pembayaran (Payment Modal) --- */
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .payment-group-title {
+            font-family: var(--font-heading);
+            font-size: 1.3em;
+            color: var(--color-primary);
+            margin-top: 15px;
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 5px;
+        }
+        .payment-option {
+            border: 2px solid var(--color-primary);
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .payment-option:hover {
+            background-color: var(--color-secondary);
+        }
+        .payment-option img {
+            width: 60px; 
+            max-height: 35px; 
+            object-fit: contain; 
+            margin-right: 15px;
+            border-radius: 4px;
+            background-color: white; 
+            padding: 2px;
+        }
+        .payment-option span {
+            font-family: var(--font-heading);
+            font-size: 1.2em;
+            color: var(--color-text-dark);
+        }
+        .payment-total-final {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            text-align: center;
+            border-top: 1px solid var(--color-primary);
+            padding-top: 15px;
+        }
+
+        /* Responsif Sederhana */
+        @media (max-width: 768px) {
+            .logo { font-size: 1.5em; }
+            .nav-links button, .cart-button { font-size: 0.9em; margin-left: 10px; }
+            #home h1 { font-size: 3em; }
+        }
+    </style>
 </head>
 <body>
 
@@ -114,4 +468,454 @@
                 <div class="item-price" onclick="showModal(this)">Rp 12.000</div>
             </div>
             <div class="menu-item">
-                <div class
+                <div class="item-info">
+                    <div class="item-name">Matcha Latte</div>
+                    <div class="item-desc">Teh hijau Jepang yang lembut.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 14.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Red Velvet</div>
+                    <div class="item-desc">Minuman velvet dengan rasa *cream cheese*.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 14.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Cookies and Cream</div>
+                    <div class="item-desc">Minuman dengan campuran biskuit dan krim.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 14.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Taro</div>
+                    <div class="item-desc">Minuman ubi talas yang khas.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 13.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Banana Cream</div>
+                    <div class="item-desc">Perpaduan pisang dan krim yang lembut.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 13.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Joshua</div>
+                    <div class="item-desc">Minuman soda dengan sirup dan jeruk nipis.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 7.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Squash Melon</div>
+                    <div class="item-desc">Minuman squash rasa melon yang menyegarkan.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Squash Leci</div>
+                    <div class="item-desc">Minuman squash rasa leci dengan potongan buah.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>🍚 Makanan Berat & Camilan Pengisi Energi</h3>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Nasi Ayam Sambel</div>
+                    <div class="item-desc">Nasi hangat dengan ayam goreng dan sambal pedas khas Bathara.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 15.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Nasi Goreng</div>
+                    <div class="item-desc">Nasi yang digoreng dengan bumbu rempah spesial.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 13.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Nasi Bakar Ayam Suwir</div>
+                    <div class="item-desc">Nasi yang dibakar dengan daun pisang, berisi ayam suwir pedas.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 15.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Nasi Telur Sambel</div>
+                    <div class="item-desc">Nasi hangat dengan telur dadar/ceplok dan sambal pedas.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 13.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Bakmi Asin</div>
+                    <div class="item-desc">Mie goreng dengan bumbu asin gurih.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 15.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Kentang Goreng</div>
+                    <div class="item-desc">Kentang goreng renyah.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Tahu Krispi</div>
+                    <div class="item-desc">Tahu yang digoreng hingga krispi.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Cireng Ayam Suwir</div>
+                    <div class="item-desc">Cireng dengan isian ayam suwir pedas.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Dimsum Mentai</div>
+                    <div class="item-desc">Dimsum kukus dengan saus mentai yang dibakar sebentar.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 12.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Mix Platter</div>
+                    <div class="item-desc">Campuran snack seperti sosis, nugget, dan kentang.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 13.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Tempe Mendoan</div>
+                    <div class="item-desc">Tempe yang digoreng setengah matang.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-info">
+                    <div class="item-name">Sosis Goreng</div>
+                    <div class="item-desc">Sosis yang digoreng.</div>
+                </div>
+                <div class="item-price" onclick="showModal(this)">Rp 10.000</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page">
+        <h2>🛠️ Tentang Kedai Bathara</h2>
+        <p>Kedai Bathara didirikan dengan semangat untuk menyajikan kopi lokal terbaik di Kediri. Nama "Bathara" diambil dari mitologi Jawa, melambangkan keagungan dan kualitas. Kami percaya bahwa setiap cangkir kopi harus memiliki cerita dan karakter. Dengan suasana retro yang hangat, kami mengundang Anda untuk bersantai, menikmati setiap tegukan, dan merasa seperti di rumah sendiri.</p>
+        <p>Kami berkomitmen menggunakan bahan-bahan segar, mulai dari biji kopi pilihan hingga rempah-rempah asli. Baik Anda mencari tempat untuk bekerja, bertemu teman, atau sekadar menikmati *me-time*, Kedai Bathara adalah pilihan yang tepat. Selamat datang di kedai kami!</p>
+    </section>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('orderModal')">&times;</span>
+            <h3 id="modal-item-name">Nama Item</h3>
+            <p class="modal-item-desc" id="modal-item-desc"></p>
+            <div class="modal-price-display">
+                Harga Satuan: <span id="modal-item-price-text">Rp 0</span>
+            </div>
+            
+            <hr>
+
+            <div class="modal-controls">
+                <label for="quantity">Jumlah Pesanan:</label>
+                <div class="quantity-control">
+                    <button onclick="changeQuantity(-1)">-</button>
+                    <input type="number" id="quantity" value="1" min="1" readonly>
+                    <button onclick="changeQuantity(1)">+</button>
+                </div>
+            </div>
+
+            <div class="modal-total">
+                Total: <span id="modal-total-price">Rp 0</span>
+            </div>
+
+            <button class="add-to-cart-button" onclick="addToCart()">
+                ➕ Tambahkan ke Keranjang
+            </button>
+        </div>
+    </div>
+    
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('cartModal')">&times;</span>
+            <h3 id="cart-title">🛒 Keranjang Belanja Anda</h3>
+
+            <div id="empty-cart-message" style="text-align: center; margin: 30px 0; display: none;">
+                Keranjang Anda kosong. Yuk, pesan kopi dulu!
+            </div>
+
+            <ul id="cart-items-list">
+                </ul>
+
+            <div class="modal-total">
+                Total Belanja: <span id="cart-total-price">Rp 0</span>
+            </div>
+
+            <button class="checkout-button" onclick="showPaymentModal()" id="checkout-btn" disabled>
+                💵 Lanjutkan ke Pembayaran
+            </button>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('paymentModal')">&times;</span>
+            <h3 id="payment-title">💳 Pilih Metode Pembayaran</h3>
+
+            <div class="payment-total-final">
+                Total Tagihan: <span id="payment-final-total">Rp 0</span>
+            </div>
+
+            <div class="payment-options">
+                
+                <div class="payment-group-title">💳 E-Wallet</div>
+                
+                <div class="payment-option" onclick="processPayment('Dana')">
+                    <img src="https://i.ibb.co/6y45s1V/dana.png" alt="Logo Dana"> 
+                    <span>Dana</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('GoPay')">
+                    <img src="https://i.ibb.co/3d5G8Sg/gopay.png" alt="Logo GoPay"> 
+                    <span>GoPay</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('OVO')">
+                    <img src="https://i.ibb.co/n1g793s/ovo.png" alt="Logo OVO"> 
+                    <span>OVO</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('Shopee Pay')">
+                    <img src="https://i.ibb.co/t4r2J7m/shopee-pay.png" alt="Logo Shopee Pay"> 
+                    <span>Shopee Pay</span>
+                </div>
+
+                <hr style="margin: 20px 0;">
+                
+                <div class="payment-group-title">🏦 Transfer Bank</div>
+                
+                <div class="payment-option" onclick="processPayment('BCA')">
+                    <img src="https://i.ibb.co/t3p157F/bca.png" alt="Logo BCA"> 
+                    <span>BCA</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('BRI')">
+                    <img src="https://i.ibb.co/x7R9y4c/bri.png" alt="Logo BRI"> 
+                    <span>BRI</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('Mandiri')">
+                    <img src="https://i.ibb.co/Wp71hJg/mandiri.png" alt="Logo Mandiri"> 
+                    <span>Mandiri</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('BNI')">
+                    <img src="https://i.ibb.co/v4h9M3y/bni.png" alt="Logo BNI"> 
+                    <span>BNI</span>
+                </div>
+                <div class="payment-option" onclick="processPayment('Bank Jatim')">
+                    <img src="https://i.ibb.co/51f0sXn/bank-jatim.png" alt="Logo Bank Jatim"> 
+                    <span>Bank Jatim</span>
+                </div>
+
+                <hr style="margin: 20px 0;">
+
+                <div class="payment-group-title">📦 Pembayaran Langsung</div>
+                <div class="payment-option" onclick="processPayment('COD')">
+                    <img src="https://i.ibb.co/v3Hw1f9/cod.png" alt="Logo COD"> 
+                    <span>Cash On Delivery (Bayar di Tempat)</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        &copy; 2025 Kedai Bathara. Dibuat dengan semangat 45 | Alamat: Jl. Jaka Muda No. 22, Kota Kediri.
+    </footer>
+
+    <script>
+        // --- LOGIKA KERANJANG GLOBAL ---
+        let selectedItem = {}; 
+        let cart = []; 
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => { page.classList.remove('active'); });
+            const activePage = document.getElementById(pageId);
+            if (activePage) { activePage.classList.add('active'); }
+            closeAllModals(); 
+            window.scrollTo(0, 0);
+        }
+
+        // Menutup semua modal
+        function closeAllModals() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('cartModal').style.display = 'none';
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function formatRupiah(number) {
+            const num = parseInt(number, 10) || 0;
+            return 'Rp ' + num.toLocaleString('id-ID');
+        }
+
+        // --- FUNGSI MODAL PESANAN & KERANJANG ---
+        function showModal(element) {
+            // Memastikan element adalah elemen yang dapat dicari dengan closest (misalnya div.item-price)
+            const itemElement = element.closest('.menu-item');
+            if (!itemElement) return; // Keluar jika tidak ditemukan item
+            
+            const name = itemElement.querySelector('.item-name').innerText;
+            const desc = itemElement.querySelector('.item-desc').innerText;
+            const priceText = itemElement.querySelector('.item-price').innerText; 
+            const priceCleaned = priceText.replace(/[^\d]/g, ''); 
+            const price = parseInt(priceCleaned, 10);
+            selectedItem = { name, price, desc };
+            document.getElementById('modal-item-name').innerText = selectedItem.name;
+            document.getElementById('modal-item-desc').innerText = selectedItem.desc;
+            document.getElementById('modal-item-price-text').innerText = priceText;
+            document.getElementById('quantity').value = 1; 
+            updateTotal();
+            document.getElementById('orderModal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let currentQty = parseInt(quantityInput.value, 10);
+            currentQty += change;
+            if (currentQty < 1) { currentQty = 1; }
+            quantityInput.value = currentQty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const total = selectedItem.price * quantity;
+            document.getElementById('modal-total-price').innerText = formatRupiah(total);
+        }
+
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const item = {
+                name: selectedItem.name,
+                price: selectedItem.price,
+                quantity: quantity,
+                total: selectedItem.price * quantity
+            };
+            cart.push(item);
+            closeModal('orderModal');
+            updateCartDisplay();
+            alert(`✅ ${quantity}x ${item.name} berhasil ditambahkan ke Keranjang!`);
+        }
+
+        function calculateCartTotal() {
+            return cart.reduce((sum, item) => sum + item.total, 0);
+        }
+
+        function updateCartDisplay() {
+            const listElement = document.getElementById('cart-items-list');
+            const totalElement = document.getElementById('cart-total-price');
+            const badgeElement = document.getElementById('cart-badge');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const emptyMessage = document.getElementById('empty-cart-message');
+
+            listElement.innerHTML = ''; 
+
+            if (cart.length === 0) {
+                badgeElement.style.display = 'none';
+                totalElement.innerText = formatRupiah(0);
+                checkoutBtn.disabled = true;
+                emptyMessage.style.display = 'block';
+                return;
+            }
+
+            emptyMessage.style.display = 'none';
+            checkoutBtn.disabled = false;
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <span class="cart-item-name">${item.quantity}x ${item.name}</span>
+                    <span>
+                        ${formatRupiah(item.total)}
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">x</button>
+                    </span>
+                `;
+                listElement.appendChild(li);
+            });
+
+            const total = calculateCartTotal();
+            totalElement.innerText = formatRupiah(total);
+            badgeElement.innerText = cart.length;
+            badgeElement.style.display = 'inline-block';
+        }
+
+        function showCartModal() {
+            updateCartDisplay(); 
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1); 
+            updateCartDisplay();
+        }
+
+        function showPaymentModal() {
+            const finalTotal = calculateCartTotal();
+            document.getElementById('payment-final-total').innerText = formatRupiah(finalTotal);
+            closeModal('cartModal');
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
+        // FUNGSI PEMBAYARAN: Menangani semua metode yang diminta
+        function processPayment(method) {
+            const finalTotal = calculateCartTotal();
+            let message = '';
+            
+            if (method === 'COD') {
+                message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
+            } else if (['BRI', 'BCA', 'BNI', 'Mandiri', 'Bank Jatim'].includes(method)) {
+                 message = `💵 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: Transfer Bank ${method}\n\nSilakan transfer ke rekening ${method} yang tertera (simulasi). Pesanan akan diproses setelah pembayaran terkonfirmasi.`;
+            } else { // Dana, OVO, Gopay, Shopee Pay (E-Wallet)
+                message = `🎉 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: E-Wallet ${method}\n\nHarap buka aplikasi ${method} untuk menyelesaikan pembayaran (simulasi). Terima kasih!`;
+            }
+            
+            alert(message);
+            
+            // Finalisasi dan reset
+            cart = [];
+            updateCartDisplay();
+            closeModal('paymentModal');
+            showPage('home'); // Kembali ke beranda
+        }
+
+        // --- GLOBAL LISTENER ---
+        window.onclick = function(event) {
+            const orderModal = document.getElementById('orderModal');
+            const cartModal = document.getElementById('cartModal');
+            const paymentModal = document.getElementById('paymentModal');
+            
+            // Menutup modal jika user mengklik di luar area modal
+            if (event.target == orderModal) closeModal('orderModal');
+            if (event.target == cartModal) closeModal('cartModal');
+            if (event.target == paymentModal) closeModal('paymentModal');
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCartDisplay);
+    </script>
+</body>
+</html>
