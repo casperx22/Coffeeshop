@@ -699,7 +699,7 @@
             return 'Rp ' + number.toLocaleString('id-ID');
         }
 
-        // --- FUNGSI MODAL PESANAN & KERANJANG (dipertahankan) ---
+        // --- FUNGSI MODAL PESANAN & KERANJANG ---
         function showModal(element) {
             const itemElement = element.closest('.menu-item');
             const name = itemElement.querySelector('.item-name').innerText;
@@ -791,70 +791,3 @@
             badgeElement.innerText = cart.length;
             badgeElement.style.display = 'inline-block';
         }
-
-        function showCartModal() {
-            updateCartDisplay(); 
-            document.getElementById('cartModal').style.display = 'block';
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1); 
-            updateCartDisplay();
-        }
-
-        function showPaymentModal() {
-            const finalTotal = calculateCartTotal();
-            document.getElementById('payment-final-total').innerText = formatRupiah(finalTotal);
-            closeModal('cartModal');
-            document.getElementById('paymentModal').style.display = 'block';
-        }
-        
-        // --- FUNGSI BARU UNTUK MENAMPILKAN MODAL QRIS PENUH ---
-        function showQrisModal() {
-            const finalTotal = calculateCartTotal();
-            document.getElementById('qris-final-total-display').innerText = formatRupiah(finalTotal);
-            closeModal('paymentModal');
-            document.getElementById('qrisDetailModal').style.display = 'block';
-        }
-        
-        // --- FUNGSI PEMBAYARAN BARU (QRIS & COD) ---
-        function processPayment(method) {
-            if (method === 'COD') {
-                finalizePayment('COD');
-            }
-        }
-
-        function finalizePayment(method) {
-             const finalTotal = calculateCartTotal();
-             let message = '';
-             
-             if (method === 'COD') {
-                 message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
-                 closeModal('paymentModal');
-             } else if (method === 'QRIS') {
-                 message = `✅ Pembayaran QRIS senilai ${formatRupiah(finalTotal)} telah kami terima (Simulasi).\n\nPesanan Anda akan segera diproses. Terima kasih!`;
-                 closeModal('qrisDetailModal');
-             }
-            
-            alert(message);
-            
-            // Finalisasi dan reset
-            cart = [];
-            updateCartDisplay();
-            showPage('home'); // Kembali ke beranda
-        }
-
-        // --- INITIAL SETUP & GLOBAL LISTENER ---
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target == modal) {
-                    closeModal(modal.id);
-                }
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', updateCartDisplay);
-    </script>
-</body>
-</html>
