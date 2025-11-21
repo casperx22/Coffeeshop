@@ -329,14 +329,19 @@
         .payment-option:hover {
             background-color: var(--color-secondary);
         }
-        /* Hapus style untuk img karena logo telah dihapus */
-        
+        .payment-option img {
+            width: 60px; 
+            max-height: 35px; 
+            object-fit: contain; 
+            margin-right: 15px;
+            border-radius: 4px;
+            background-color: white; 
+            padding: 2px;
+        }
         .payment-option span {
             font-family: var(--font-heading);
             font-size: 1.2em;
             color: var(--color-text-dark);
-            /* Tambahkan margin untuk mengganti ruang logo */
-            margin-left: 5px; 
         }
         .payment-total-final {
             font-size: 1.3em;
@@ -681,15 +686,19 @@
                 <div class="payment-group-title">💳 E-Wallet</div>
                 
                 <div class="payment-option" onclick="processPayment('Dana')">
+                    <img src="https://i.pinimg.com/736x/15/70/fd/1570fd11f1a407ea06a500b21825d6a4.jpg" alt="Logo Dana"> 
                     <span>Dana</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('GoPay')">
+                    <img src="https://i.pinimg.com/736x/c6/ff/98/c6ff98709f5fa0082bd32f6910a6fb6b.jpg" alt="Logo GoPay"> 
                     <span>GoPay</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('OVO')">
+                    <img src="https://i.pinimg.com/1200x/73/85/c9/7385c9ad635785453e4ab577e02ff80e.jpg" alt="Logo OVO"> 
                     <span>OVO</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('Shopee Pay')">
+                    <img src="https://i.pinimg.com/736x/d3/53/0f/d3530faa8695f59cc2d2f376fcf45b74.jpg" alt="Logo Shopee Pay"> 
                     <span>Shopee Pay</span>
                 </div>
 
@@ -698,18 +707,23 @@
                 <div class="payment-group-title">🏦 Transfer Bank</div>
                 
                 <div class="payment-option" onclick="processPayment('BCA')">
+                    <img src="https://i.pinimg.com/736x/0d/a8/41/0da841a2721acd4740f5b5d7d049c0fb.jpg" alt="Logo BCA"> 
                     <span>BCA</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('BRI')">
+                    <img src="https://i.pinimg.com/736x/27/80/e8/2780e8529c67fc249786351a056fb83e.jpg" alt="Logo BRI"> 
                     <span>BRI</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('Mandiri')">
+                    <img src="https://i.pinimg.com/1200x/c9/ae/a3/c9aea346643eb758dd03c11c0d1fa5dd.jpg" alt="Logo Mandiri"> 
                     <span>Mandiri</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('BNI')">
+                    <img src="https://i.pinimg.com/1200x/36/38/43/36384348ef9d7bfff66da6da9e975d56.jpg" alt="Logo BNI"> 
                     <span>BNI</span>
                 </div>
                 <div class="payment-option" onclick="processPayment('Bank Jatim')">
+                    <img src="https://i.pinimg.com/1200x/c0/f0/10/c0f0102da7ac54486dc816d957bdd2f9.jpg" alt="Logo Bank Jatim"> 
                     <span>Bank Jatim</span>
                 </div>
 
@@ -717,6 +731,7 @@
 
                 <div class="payment-group-title">📦 Pembayaran Langsung</div>
                 <div class="payment-option" onclick="processPayment('COD')">
+                    <img src="https://i.pinimg.com/1200x/ae/39/a6/ae39a60909898ed696ce479eb0f3dccd.jpg" alt="Logo COD"> 
                     <span>Cash On Delivery (Bayar di Tempat)</span>
                 </div>
             </div>
