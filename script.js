@@ -19,7 +19,6 @@ function closeAllModals() {
 }
 
 function formatRupiah(number) {
-    // Memastikan angka yang diformat adalah integer atau float, lalu menggunakan toLocaleString
     const num = parseInt(number, 10) || 0;
     return 'Rp ' + num.toLocaleString('id-ID');
 }
@@ -30,7 +29,6 @@ function showModal(element) {
     const name = itemElement.querySelector('.item-name').innerText;
     const desc = itemElement.querySelector('.item-desc').innerText;
     const priceText = itemElement.querySelector('.item-price').innerText; 
-    // Menghapus semua karakter non-digit kecuali tanda ribuan/desimal jika ada, lalu konversi ke integer
     const priceCleaned = priceText.replace(/[^\d]/g, ''); 
     const price = parseInt(priceCleaned, 10);
     selectedItem = { name, price, desc };
@@ -135,7 +133,7 @@ function showPaymentModal() {
     document.getElementById('paymentModal').style.display = 'block';
 }
 
-// FUNGSI PEMBAYARAN BARU
+// FUNGSI PEMBAYARAN: Menangani semua metode yang diminta
 function processPayment(method) {
     const finalTotal = calculateCartTotal();
     let message = '';
@@ -143,9 +141,9 @@ function processPayment(method) {
     if (method === 'COD') {
         message = `🎉 PESANAN COD BERHASIL! 🎉\n\nTotal Bayar: ${formatRupiah(finalTotal)}\nMetode: Cash On Delivery (COD)\n\nHarap siapkan uang tunai saat pesanan tiba. Terima kasih!`;
     } else if (['BRI', 'BCA', 'BNI', 'Mandiri', 'Bank Jatim'].includes(method)) {
-         message = `💵 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: Transfer Bank ${method}\n\nSilakan transfer ke rekening ${method} yang tertera. Pesanan akan diproses setelah pembayaran terkonfirmasi.`;
+         message = `💵 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: Transfer Bank ${method}\n\nSilakan transfer ke rekening ${method} yang tertera (simulasi). Pesanan akan diproses setelah pembayaran terkonfirmasi.`;
     } else { // Dana, OVO, Gopay, Shopee Pay (E-Wallet)
-        message = `🎉 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: E-Wallet ${method}\n\nHarap buka aplikasi ${method} untuk menyelesaikan pembayaran. Terima kasih!`;
+        message = `🎉 Pesanan Berhasil! Total: ${formatRupiah(finalTotal)}\n\nMetode: E-Wallet ${method}\n\nHarap buka aplikasi ${method} untuk menyelesaikan pembayaran (simulasi). Terima kasih!`;
     }
     
     alert(message);
@@ -163,6 +161,7 @@ window.onclick = function(event) {
     const cartModal = document.getElementById('cartModal');
     const paymentModal = document.getElementById('paymentModal');
     
+    // Menutup modal jika user mengklik di luar area modal
     if (event.target == orderModal) closeModal('orderModal');
     if (event.target == cartModal) closeModal('cartModal');
     if (event.target == paymentModal) closeModal('paymentModal');
